@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from 'react'
+import { useNavigate } from "react-router-dom";
 import imgBG from "../../assets/imagens/bg_list.jpg";
 import { DefaultContext } from '../../context/context_default';
 import Select from 'react-select'
@@ -14,13 +15,8 @@ import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 
-import iconT from '../../assets/imagens/1.png'
-import iconS from '../../assets/imagens/2.png'
-import iconC from '../../assets/imagens/3.png'
-import iconV from '../../assets/imagens/4.png'
-import iconN from '../../assets/imagens/5.png'
-
 const ListaCards = () => {
+    const navigate = useNavigate()
     const {
         subTipos,
         tipos,
@@ -30,6 +26,7 @@ const ListaCards = () => {
         raridades,
         is_descktop,
         listCards,
+        showListCards,
         list,
         isOpen,
         setIsOpen,
@@ -47,7 +44,7 @@ const ListaCards = () => {
         var colun = parseInt(larg / (zoom ? 245 : 145))
         colun = colun == 0 ? 1 : colun
 
-        console.log("colun", colun)
+        // console.log("colun", colun)
         if (colun == 1 && column_count != 1) {
             setColumn_count(colun)
             setForceGridUpdate(prevState => !prevState);
@@ -60,7 +57,7 @@ const ListaCards = () => {
         setForceGridUpdate(prevState => !prevState);
 
 
-    }, [zoom, isOpen])
+    }, [zoom, isOpen, showListCards])
     useEffect(() => {
         // if ((column_count == 1 && flag_att_coluna != 1) || (column_count != 1 && flag_att_coluna == 1) || (column_count == 1 && flag_att_coluna == 1)) {
         //     setForceGridUpdate(prevState => !prevState);
@@ -72,11 +69,11 @@ const ListaCards = () => {
 
     const cellRenderer = ({ columnIndex, key, rowIndex, style }) => {
         const index = rowIndex * column_count + columnIndex;
-        const card = listCards[index];
+        const card = showListCards[index];
 
         return (
-            <div key={key} style={style} className='flex justify-center items-center flex-1'>
-                {card && <Card card={card} zoom={zoom} />}
+            <div onClick={() => { navigate("/detail/" + card.id) }} key={key} style={style} className='flex justify-center items-center flex-1'>
+                {card && <Card card={card} zoom={zoom} index={columnIndex + 1} columMax={column_count} />}
             </div>
         );
     };
@@ -104,7 +101,7 @@ const ListaCards = () => {
                 <div className={` w-full h-[99%]  pb-[40px]   `}>
                     <AutoSizer>
                         {({ height, width }) => {
-                            console.log(height, width)
+                            // console.log(height, width)
                             calc_column(width)
 
                             return (
@@ -113,10 +110,10 @@ const ListaCards = () => {
                                     key={forceGridUpdate}
                                     cellRenderer={cellRenderer}
                                     columnCount={column_count}
-                                    columnWidth={(column_count == 1 ? width : (zoom ? 245 : 145))} // Largura de cada coluna
+                                    columnWidth={(column_count == 1 ? width : column_count == 2 ? width / 2.2 : (zoom ? 245 : 145))} // Largura de cada coluna
                                     height={height}
-                                    rowCount={Math.ceil(listCards.length / column_count)}
-                                    rowHeight={(zoom ? 345 : 245)} // Altura de cada linha
+                                    rowCount={Math.ceil(showListCards.length / column_count)}
+                                    rowHeight={(zoom ? 345 : 205)} // Altura de cada linha
                                     width={width} // Largura total do grid
                                 />
                             )
@@ -126,7 +123,7 @@ const ListaCards = () => {
                 </div>
 
             </div>
-            <aside className={`${isOpen ? 'translate-x-0 duration-200' : ' duration-300 translate-x-full '}  bg-slate-700  pt-20 transition-transform  fixed top-0 right-0 z-30 w-80 h-screen shadow-lg flex flex-col p-3 `}>
+            <aside className={`${isOpen ? 'translate-x-0 duration-200' : ' duration-300 translate-x-full '}  bg-slate-700  pt-20 transition-transform  fixed top-0 right-0 z-30 w-80 h-screen shadow-lg flex flex-col p-3 border-l border-slate-600 border-opacity-60`}>
 
 
                 <Filtro toggleDrawer={toggleDrawer} />

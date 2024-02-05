@@ -16,6 +16,7 @@ import Login from './pages/login';
 import CreatAcount from './pages/createAcount';
 import ListaCards from './pages/listaCards/listaCards';
 import CardDetail from './pages/cardDetail';
+import DeckBuild from './pages/deckBuild';
 
 const options = {
   // you can also just use 'bottom center'
@@ -39,6 +40,7 @@ const router = createBrowserRouter([{
   children: [
     { path: "/", element: <ListaCards /> },
     { path: "/deck-list", element: <DeckList /> },
+    { path: "/deck-build", element: <DeckBuild /> },
     { path: "/list", element: <ListaCards /> },
     { path: "/up-card", element: <UparCardfa /> },
     { path: "/detail/:id", element: <CardDetail /> },

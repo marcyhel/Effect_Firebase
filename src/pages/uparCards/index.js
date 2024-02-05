@@ -68,12 +68,12 @@ const UparCardfa = () => {
 
     useEffect(() => {
 
-        getSubTipos();
-        getTipos();
-        getPalavrasChave();
-        getFortunas();
-        getCausas();
-        getRaridade();
+        // getSubTipos();
+        // getTipos();
+        // getPalavrasChave();
+        // getFortunas();
+        // getCausas();
+        // getRaridade();
 
     }, [])
 

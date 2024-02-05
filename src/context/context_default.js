@@ -13,6 +13,15 @@ import FortunasDB from "../database/wrappers/fortunas";
 import RaridadesDB from "../database/wrappers/raridades";
 import CardDB from "../database/wrappers/cards";
 
+
+import imgBG from "../assets/imagens/bg_card.jpg";
+import imgIgn from "../assets/imagens/ign.png";
+import imgVerbus from "../assets/imagens/verbus.png";
+import imgKarma from "../assets/imagens/karma.png";
+import imgGnos from "../assets/imagens/gnus.png";
+import imgOmna from "../assets/imagens/omna.png";
+import imgDnama from "../assets/imagens/dnama.png";
+
 export const DefaultContext = createContext({})
 
 export default function DefaultProvider({ children }) {
@@ -27,6 +36,8 @@ export default function DefaultProvider({ children }) {
     const [fortunas, setFortunas] = useState([]);
     const [raridades, setRaridades] = useState([]);
     const [listCards, setListCards] = useState([]);
+    const [showListCards, setShowListCards] = useState([]);
+    const [showCardFlutuante, setShowCardFlutuante] = useState(null);
     const [filterFetch, setFilterFetch] = useState({
         name: '',
         filter: {}
@@ -35,7 +46,7 @@ export default function DefaultProvider({ children }) {
 
 
     useEffect(() => {
-        console.log("aquii")
+        // console.log("aquii")
         getListCards()
         let isSign = false;
         const onSubscriber = auth.onAuthStateChanged(user => {
@@ -110,11 +121,23 @@ export default function DefaultProvider({ children }) {
             mediaQuery.removeListener(checkDeviceType);
         };
     }, []);
+    useEffect(() => {
+        getSubTipos();
+        getTipos();
+        getPalavrasChave();
+        getFortunas();
+        getCausas();
+        getRaridade();
+        getListCards();
+
+
+
+    }, [])
 
     // -------------filtro-----------
     useEffect(() => {
         // filterFetch
-        console.log("alterado Lista")
+        // console.log("alterado Lista")
     }, [filterFetch])
 
     const deslogar = () => {
@@ -140,7 +163,7 @@ export default function DefaultProvider({ children }) {
 
     const getSubTipos = async () => {
         if (subTipos.length == 0) {
-            console.log("buscando SUb")
+            // console.log("buscando SUb")
             const subTipoDB = new SubTipoDb()
             await subTipoDB.getAll().then(resultado => {
                 setSubTipos(resultado)
@@ -192,9 +215,41 @@ export default function DefaultProvider({ children }) {
             const cardDB = new CardDB()
             await cardDB.getAll().then(resultado => {
                 setListCards(resultado)
+                setShowListCards(resultado)
             })
         }
 
+    }
+    function HTMLRenderer({ html }) {
+        return <div dangerouslySetInnerHTML={{ __html: html }} />;
+    }
+
+
+    const replacesAll = (string, search, replace) => {
+        return string.split(search).join(replace);
+    }
+    const replaceText = (text) => {
+        var img_quente = '<img style="width : 20px; height: 20px; display:inline; -webkit-filter: drop-shadow(0px 0px 3px #ff0050); filter: drop-shadow(0px 0px 3px #ff0050);" src='
+        var img_algida = '<img style="width : 20px; height: 20px; display:inline; -webkit-filter: drop-shadow(0px 0px 3px #00a0ff); filter: drop-shadow(0px 0px 3px #00a0ff);" src='
+        // console.log('text ====>', text)
+        text = replacesAll(text, '[ign]', `${img_quente} ${imgIgn} ></img>`)
+        text = replacesAll(text, '[verbus]', `${img_quente} ${imgVerbus} ></img>`)
+        text = replacesAll(text, '[karma]', `${img_quente} ${imgKarma} ></img>`)
+        text = replacesAll(text, '[gnos]', `${img_algida} ${imgGnos} ></img>`)
+        text = replacesAll(text, '[dnama]', `${img_algida} ${imgDnama} ></img>`)
+        text = replacesAll(text, '[omna]', `${img_algida} ${imgOmna} ></img>`)
+
+        text = replacesAll(text, '[h-destruicao]', `[▲]`)
+        text = replacesAll(text, '[destruicao]', `▲`)
+        text = replacesAll(text, '[h-controle]', `[▶]`)
+        text = replacesAll(text, '[controle]', `▶`)
+        text = replacesAll(text, '[h-criacao]', `[▼]`)
+        text = replacesAll(text, '[criacao]', `▼`)
+        text = replacesAll(text, '[h-alteracao]', `[◀]`)
+        text = replacesAll(text, '[alteracao]', `◀`)
+
+
+        return text
     }
 
     return (
@@ -220,7 +275,13 @@ export default function DefaultProvider({ children }) {
             is_descktop,
 
             filterFetch,
-            setFilterFetch
+            setFilterFetch,
+            replaceText,
+            HTMLRenderer,
+            setShowListCards,
+            showListCards,
+            showCardFlutuante,
+            setShowCardFlutuante
         }}>
             {children}
 
