@@ -44,6 +44,7 @@ export function useFilter() {
     const [fortunasFilter, setFortunasFilter] = useState([]);
     const [subTiposFilter, setSubTiposFilter] = useState([]);
     const [raridadeFilter, setRaridadeFilter] = useState([]);
+    const [fortunasCustoFilter, setFortunasCustoFilter] = useState([]);
 
 
 
@@ -68,7 +69,8 @@ export function useFilter() {
             poderFilter,
             fortunasFilter,
             subTiposFilter,
-            raridadeFilter
+            raridadeFilter,
+            fortunasCustoFilter
         })
     }, [causasFilter,
         tipoFilter,
@@ -77,7 +79,8 @@ export function useFilter() {
         poderFilter,
         fortunasFilter,
         subTiposFilter,
-        raridadeFilter
+        raridadeFilter,
+        fortunasCustoFilter
     ])
 
     useEffect(() => {
@@ -124,6 +127,11 @@ export function useFilter() {
                 (poderFilter.includes('7') && parseInt(carta.p_a) >= 7) || poderFilter.includes(carta.p_a)
             );
         }
+        if (fortunasCustoFilter.length) {
+            cartasFiltradas = cartasFiltradas.filter(carta =>
+                fortunasCustoFilter.some(fortuna => carta.fortunaCusto.includes(fortuna.id))
+            );
+        }
 
 
         setShowListCards(cartasFiltradas)
@@ -154,6 +162,7 @@ export function useFilter() {
         vidaFilter,
         poderFilter,
         fortunasFilter,
+        fortunasCustoFilter,
         subTiposFilter,
         raridadeFilter,
 
@@ -163,6 +172,7 @@ export function useFilter() {
         setVidaFilter,
         setPoderFilter,
         setFortunasFilter,
+        setFortunasCustoFilter,
         setSubTiposFilter,
         setRaridadeFilter
 

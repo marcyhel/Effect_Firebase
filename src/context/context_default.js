@@ -42,7 +42,8 @@ export default function DefaultProvider({ children }) {
         name: '',
         filter: {}
     });
-
+    const [listCardDeck, setListCardDeck] = useState([]);
+    const [listCardDeckMatriz, setListCardDeckMatriz] = useState([]);
 
 
     useEffect(() => {
@@ -231,6 +232,9 @@ export default function DefaultProvider({ children }) {
     const replaceText = (text) => {
         var img_quente = '<img style="width : 20px; height: 20px; display:inline; -webkit-filter: drop-shadow(0px 0px 3px #ff0050); filter: drop-shadow(0px 0px 3px #ff0050);" src='
         var img_algida = '<img style="width : 20px; height: 20px; display:inline; -webkit-filter: drop-shadow(0px 0px 3px #00a0ff); filter: drop-shadow(0px 0px 3px #00a0ff);" src='
+
+        var num_algida = '<span style="text-shadow:0px 0px 5px #00a0ff; display:inline;" >'
+        var num_quente = '<span style="text-shadow:0px 0px 5px #ff0050; display:inline;" >'
         // console.log('text ====>', text)
         text = replacesAll(text, '[ign]', `${img_quente} ${imgIgn} ></img>`)
         text = replacesAll(text, '[verbus]', `${img_quente} ${imgVerbus} ></img>`)
@@ -247,6 +251,9 @@ export default function DefaultProvider({ children }) {
         text = replacesAll(text, '[criacao]', `▼`)
         text = replacesAll(text, '[h-alteracao]', `[◀]`)
         text = replacesAll(text, '[alteracao]', `◀`)
+
+        text = replacesAll(text, '[1-a]', `${num_algida} 1 </span>`)
+        text = replacesAll(text, '[1-q]', `${num_quente} 1 </span>`)
 
 
         return text
@@ -281,7 +288,11 @@ export default function DefaultProvider({ children }) {
             setShowListCards,
             showListCards,
             showCardFlutuante,
-            setShowCardFlutuante
+            setShowCardFlutuante,
+            listCardDeck,
+            setListCardDeck,
+            listCardDeckMatriz,
+            setListCardDeckMatriz
         }}>
             {children}
 

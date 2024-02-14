@@ -6,7 +6,7 @@ import { auth, db } from "../../firebase";
 
 class RaridadesDB {
     constructor() {
-        this.collection = 'raridades';
+        this.collection = 'Raridades';
     }
 
     create(data) {

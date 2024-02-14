@@ -101,7 +101,7 @@ const CreatAcount = () => {
                     <input onChange={senhaChange} value={senha} type="password" id="first_name" className="border   text-sm rounded-lg   block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="" required />
                 </div>
 
-                <button onClick={() => { criaUser() }} className='bg-green-800 hover:bg-green-900 py-2 rounded-xl text-white mt-10 flex justify-center items-center'>
+                <button onClick={() => { criaUser() }} disabled={load} className={`${load ? "" : "hover:bg-green-900"} bg-green-800  py-2 rounded-xl text-white mt-10 flex justify-center items-center`}>
                     {load ? <TailSpin
                         height="24"
                         width="24"

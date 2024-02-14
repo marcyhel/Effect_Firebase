@@ -19,8 +19,11 @@ const DeckList = () => {
             <div className={` bg-slate-700 bg-opacity-[94%] w-full h-full pt-20 transition-all p-4  `}>
                 {globalFirestoreData.userId ?
                     <div className='grid'>
-                        <Link to='/deck-build' className='flex justify-center items-center bg-slate-600 w-44 h-56 border border-slate-700 rounded-2xl shadow hover:bg-slate-500 cursor-pointer '>
-                            <AddRoundedIcon className=" text-gray-20 scale-[2] "></AddRoundedIcon>
+                        <Link to='/deck-build' className=' bg-slate-600 w-44 h-56 border border-slate-700 rounded-2xl shadow hover:bg-slate-500 cursor-pointer p-1 '>
+                            <div className='flex justify-center items-center w-full h-full border rounded-xl border-slate-400 border-opacity-50'>
+                                <AddRoundedIcon className=" text-gray-20 scale-[2] "></AddRoundedIcon>
+                            </div>
+
                         </Link>
                     </div>
                     :

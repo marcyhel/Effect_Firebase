@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useContext, useState } from 'react'
 import { DefaultContext } from '../../../context/context_default';
 import imgBG from "../../../assets/imagens/2.png";
 
-const ItemListDeckBuild = ({ item, qtd, }) => {
+const ItemListDeckBuild = ({ item, lessItem, addItem }) => {
     const [card, setCard] = useState(null);
     const [showOverlay, setshowOverlay] = useState(false);
     const meuElementoRef = useRef(null);
@@ -13,20 +13,32 @@ const ItemListDeckBuild = ({ item, qtd, }) => {
     } = useContext(DefaultContext);
     function getPosition() {
         const elemento = meuElementoRef.current;
-        console.log("aaa6")
         if (elemento) {
             const { x, y } = elemento.getBoundingClientRect();
-            console.log('Posição X:', x);
-            console.log('Posição Y:', y);
+
             return y
         }
         return 600;
-    }; // Executado apenas uma vez após a montagem do componente
+    };
+
     useEffect(() => {
-        setCard(listCards.find(e => e.id == item))
-    }, [])
+        setCard(listCards.find(e => e.id == item.id))
+    }, [item])
+
     const hovering = () => { setShowCardFlutuante({ y: getPosition(), url_img: card.url_img }) };
     const notHovering = () => setShowCardFlutuante(false);
+    let hoverTimer;
+    const handleMouseEnter = () => {
+        hoverTimer = setTimeout(() => {
+            setShowCardFlutuante({ y: getPosition(), url_img: card.url_img })
+        }, 500);
+    };
+
+    const handleMouseLeave = () => {
+        setShowCardFlutuante(false);
+        clearTimeout(hoverTimer);
+
+    };
 
     return (
         card ?
@@ -38,12 +50,18 @@ const ItemListDeckBuild = ({ item, qtd, }) => {
 
 
                 </div>
-                <div className='rounded bg-auto bg-center w-full h-9 border border-slate-400 mb-1 cursor-pointer' onMouseEnter={hovering} onMouseLeave={notHovering} >
-                    <div className='bg-gradient-to-r from-blue-900 rounded w-full h-9 flex items-center p-1'>
-                        <div className='flex justify-center items-center p-1 rounded-full border border-slate-800 bg-slate-600 w-6 h-6 mr-2'>{card.custo ? card.custo : 0}</div>
-                        {card.nome}
-                        <div className='flex-1'></div>
-                        <div className='flex justify-center items-center p-1 rounded border border-slate-800 bg-slate-600 w-7 h-7'>x{qtd}</div>
+                <div className='rounded bg-auto bg-center w-full h-9 border border-slate-400 mb-1 cursor-pointer select-none' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
+                    <div className='bg-gradient-to-r from-slate-800 rounded w-full h-9 flex items-center '>
+                        <div className='flex-1 flex hover:bg-slate-800 hover:bg-opacity-30 pl-1 pt-1 pb-1' onClick={() => { lessItem(item.id) }}>
+                            <div className='flex justify-center items-center p-1 rounded-full border border-slate-800 bg-slate-600 w-6 h-6 mr-2'>{card.custo ? card.custo : 0}</div>
+                            {card.nome}
+                            <div className='flex-1'></div>
+                        </div>
+                        <div className='mr-1 mt-1 mb-1' onClick={() => { addItem(item.id) }}>
+                            <div className=' hover:bg-slate-500  flex justify-center items-center p-1 rounded border border-slate-800 bg-slate-600 w-7 h-7 select-none'>x{item.qtd}</div>
+
+                        </div>
+
                     </div>
                 </div>
 

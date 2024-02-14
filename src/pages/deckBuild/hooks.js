@@ -19,18 +19,26 @@ export function useDeckBuild() {
         is_descktop,
         filterFetch,
         setShowListCards,
-        showListCards
+        showListCards,
+        showCardFlutuante,
+        setShowCardFlutuante,
+        listCardDeck,
+        setListCardDeck,
+        listCardDeckMatriz,
+        setListCardDeckMatriz
 
     } = useContext(DefaultContext);
 
     const [isOpenFilter, setIsOpenFilter] = useState(false);
     const [isOpenDeck, setIsOpenDeck] = useState(false);
     const [zoom, setZoom] = useState(true);
+    const [editName, setEditName] = useState(false);
+    const [colapseFortuna, setColapseFortuna] = useState(false);
 
-    const [listCardDeck, setListCardDeck] = useState({
-        GPPFFc7MOYcq1X1JdbmL: 1,
-        LeC4mUt8Gjp6PXjVg3LN: 3
-    });
+
+    const [deckName, setDeckName] = useState('Novo Deck');
+
+
 
     const toggleDrawerFilter = () => {
         setIsOpenFilter(!isOpenFilter);
@@ -64,20 +72,93 @@ export function useDeckBuild() {
         };
     }, []);
 
-    function addCardToDeck(card) {
+    function addCardToDeck(cardId) {
 
-        var aux_list = listCardDeck
-        if (aux_list[card.id]) {
-            aux_list[card.id] += 1
-        } else {
-            aux_list[card.id] = 1
+        var aux_list = listCardDeck;
+        console.log(aux_list)
+        if (aux_list.filter((e => e.id == cardId)).length > 0) {
+            for (let item of aux_list) {
+                if (item.id == cardId) {
+                    item.qtd += 1
+                }
+            }
         }
+        else {
+            aux_list.push(
+                { id: cardId, qtd: 1 },
+            )
+        }
+
+
         // console.log(aux_list)
-        setListCardDeck({ ...aux_list })
+        setListCardDeck([...aux_list])
     }
-    useEffect(() => {
-        // console.log("card List", listCardDeck)
-    }, [listCardDeck])
+    function lessCardToDeck(cardId) {
+        console.log("Entrando em lessCardToDeck");
+        console.log("cardId:", cardId);
+        var aux_list = listCardDeck;
+        if (aux_list.filter((e => e.id == cardId)).length > 0) {
+            if (aux_list.find((e => e.id == cardId)).qtd <= 1) {
+                aux_list = aux_list.filter((elemento) => elemento.id !== cardId);
+                setShowCardFlutuante(null)
+            } else {
+                for (let item of aux_list) {
+                    if (item.id == cardId) {
+                        item.qtd -= 1
+                    }
+                }
+            }
+
+        }
+        console.log(cardId, aux_list)
+        setListCardDeck([...aux_list])
+
+    }
+
+    function addCardToDeckMatriz(cardId) {
+
+        var aux_list = listCardDeckMatriz;
+        console.log(aux_list)
+        if (aux_list.filter((e => e.id == cardId)).length > 0) {
+            for (let item of aux_list) {
+                if (item.id == cardId) {
+                    item.qtd += 1
+                }
+            }
+        }
+        else {
+            aux_list.push(
+                { id: cardId, qtd: 1 },
+            )
+        }
+
+
+        // console.log(aux_list)
+        setListCardDeckMatriz([...aux_list])
+    }
+    function lessCardToDeckMatriz(cardId) {
+        console.log("Entrando em lessCardToDeck");
+        console.log("cardId:", cardId);
+        var aux_list = listCardDeckMatriz;
+        if (aux_list.filter((e => e.id == cardId)).length > 0) {
+            if (aux_list.find((e => e.id == cardId)).qtd <= 1) {
+                aux_list = aux_list.filter((elemento) => elemento.id !== cardId);
+                setShowCardFlutuante(null)
+            } else {
+                for (let item of aux_list) {
+                    if (item.id == cardId) {
+                        item.qtd -= 1
+                    }
+                }
+            }
+
+        }
+        console.log(cardId, aux_list)
+        setListCardDeckMatriz([...aux_list])
+
+    }
+
+
     function range(start, end) {
         return Array(end - start + 1).fill().map((_, idx) => start + idx)
     }
@@ -96,6 +177,19 @@ export function useDeckBuild() {
         setZoom,
         listCardDeck,
         setListCardDeck,
-        addCardToDeck
+        listCardDeckMatriz,
+        setListCardDeckMatriz,
+        addCardToDeck,
+        lessCardToDeck,
+        addCardToDeckMatriz,
+        lessCardToDeckMatriz,
+        deckName,
+        setDeckName,
+        editName,
+        setEditName,
+        colapseFortuna,
+        setColapseFortuna,
+
+
     }
 }

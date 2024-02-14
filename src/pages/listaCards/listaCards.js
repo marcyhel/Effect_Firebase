@@ -72,7 +72,7 @@ const ListaCards = () => {
         const card = showListCards[index];
 
         return (
-            <div onClick={() => { navigate("/detail/" + card.id) }} key={key} style={style} className='flex justify-center items-center flex-1'>
+            <div onClick={card ? () => { navigate("/detail/" + card?.id) } : null} key={key} style={style} className='flex justify-center items-center flex-1'>
                 {card && <Card card={card} zoom={zoom} index={columnIndex + 1} columMax={column_count} />}
             </div>
         );

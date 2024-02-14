@@ -49,18 +49,21 @@ export const Card = ({ card, zoom, index, columMax }) => {
     // console.log(card)
 
     const handleImageLoad = () => {
-        // setImageLoaded(true);
-        setImageLoaded(false);
+        setImageLoaded(true);
+        // setImageLoaded(false);
 
     };
-
+    const estiloDoComponenteCard = {
+        WebkitFilter: 'drop-shadow(0px 0px 2px #0f0f0f95)',
+        filter: 'drop-shadow(0px 0px 2px #0f0f0f)',
+    };
 
     return (
         <div className={`${zoom ? "w-[245px] h-[345px]" : "w-[145px] h-[245px]"} m-[1px] relative  `} >
 
             <div className={`${zoom ? "hover:w-[251px] hover:h-[355px]" : "hover:w-[151px] hover:h-[255px] "} hover:translate-x-[-3px] hover:translate-y-[-5px] h-full w-full duration-100 cursor-pointer `} onMouseEnter={hovering} onMouseLeave={notHovering}>
 
-                <img className=' w-full h-full object-contain' src={imageLoaded ? card.url_img : require('../../../assets/imagens/back_card.png')} loading="lazy" onLoad={handleImageLoad}></img>
+                <img className=' w-full h-full object-contain' style={estiloDoComponenteCard} src={imageLoaded ? card.url_img : require('../../../assets/imagens/back_card.png')} loading="lazy" onLoad={handleImageLoad}></img>
             </div>
             <div className={`absolute w-[250px] h-9 top-0 mt-4 ${(!zoom ? (index === columMax || index === columMax - 1) : (index === columMax)) ? "left-[-250px]" : "right-[-250px]"}  z-20 opacity-0 ${showOverlay ? "opacity-100 visible" : "invisible"} transition duration-300 flex flex-col space-y-2`}>
                 {palavraChave && card ? card.p_c.map(id => {

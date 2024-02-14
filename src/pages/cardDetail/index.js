@@ -37,7 +37,8 @@ const CardDetail = () => {
         getListCards,
         is_descktop,
         filterFetch,
-        HTMLRenderer
+        HTMLRenderer,
+        replaceText
     } = useContext(DefaultContext);
 
     useEffect(() => {
@@ -71,36 +72,36 @@ const CardDetail = () => {
 
 
     const handleImageLoad = () => {
-        // setImageLoaded(true);
-        setImageLoaded(false);
+        setImageLoaded(true);
+        // setImageLoaded(false);
 
     };
     const replacesAll = (string, search, replace) => {
         return string.split(search).join(replace);
     }
-    const replaceText = (text) => {
-        var img_quente = '<img style="width : 20px; height: 20px; display:inline; -webkit-filter: drop-shadow(0px 0px 3px #ff0050); filter: drop-shadow(0px 0px 3px #ff0050);" src='
-        var img_algida = '<img style="width : 20px; height: 20px; display:inline; -webkit-filter: drop-shadow(0px 0px 3px #00a0ff); filter: drop-shadow(0px 0px 3px #00a0ff);" src='
-        // console.log('text ====>', text)
-        text = replacesAll(text, '[ign]', `${img_quente} ${imgIgn} ></img>`)
-        text = replacesAll(text, '[verbus]', `${img_quente} ${imgVerbus} ></img>`)
-        text = replacesAll(text, '[karma]', `${img_quente} ${imgKarma} ></img>`)
-        text = replacesAll(text, '[gnos]', `${img_algida} ${imgGnos} ></img>`)
-        text = replacesAll(text, '[dnama]', `${img_algida} ${imgDnama} ></img>`)
-        text = replacesAll(text, '[omna]', `${img_algida} ${imgOmna} ></img>`)
+    // const replaceText = (text) => {
+    //     var img_quente = '<img style="width : 20px; height: 20px; display:inline; -webkit-filter: drop-shadow(0px 0px 3px #ff0050); filter: drop-shadow(0px 0px 3px #ff0050);" src='
+    //     var img_algida = '<img style="width : 20px; height: 20px; display:inline; -webkit-filter: drop-shadow(0px 0px 3px #00a0ff); filter: drop-shadow(0px 0px 3px #00a0ff);" src='
+    //     // console.log('text ====>', text)
+    //     text = replacesAll(text, '[ign]', `${img_quente} ${imgIgn} ></img>`)
+    //     text = replacesAll(text, '[verbus]', `${img_quente} ${imgVerbus} ></img>`)
+    //     text = replacesAll(text, '[karma]', `${img_quente} ${imgKarma} ></img>`)
+    //     text = replacesAll(text, '[gnos]', `${img_algida} ${imgGnos} ></img>`)
+    //     text = replacesAll(text, '[dnama]', `${img_algida} ${imgDnama} ></img>`)
+    //     text = replacesAll(text, '[omna]', `${img_algida} ${imgOmna} ></img>`)
 
-        text = replacesAll(text, '[h-destruicao]', `[▲]`)
-        text = replacesAll(text, '[destruicao]', `▲`)
-        text = replacesAll(text, '[h-controle]', `[▶]`)
-        text = replacesAll(text, '[controle]', `▶`)
-        text = replacesAll(text, '[h-criacao]', `[▼]`)
-        text = replacesAll(text, '[criacao]', `▼`)
-        text = replacesAll(text, '[h-alteracao]', `[◀]`)
-        text = replacesAll(text, '[alteracao]', `◀`)
+    //     text = replacesAll(text, '[h-destruicao]', `[▲]`)
+    //     text = replacesAll(text, '[destruicao]', `▲`)
+    //     text = replacesAll(text, '[h-controle]', `[▶]`)
+    //     text = replacesAll(text, '[controle]', `▶`)
+    //     text = replacesAll(text, '[h-criacao]', `[▼]`)
+    //     text = replacesAll(text, '[criacao]', `▼`)
+    //     text = replacesAll(text, '[h-alteracao]', `[◀]`)
+    //     text = replacesAll(text, '[alteracao]', `◀`)
 
 
-        return text
-    }
+    //     return text
+    // }
 
     function contarElementosIguais(jsonReferencia, jsonComparacao) {
         let contador = 0;
@@ -143,13 +144,17 @@ const CardDetail = () => {
         filter: 'drop-shadow(0px 0px 1px #ffffff52)',
 
     };
+    const estiloDoComponenteCard = {
+        WebkitFilter: 'drop-shadow(0px 0px 4px #0f0f0f)',
+        filter: 'drop-shadow(0px 0px 4px #0f0f0f)',
+    };
     return (
         <div style={{ backgroundImage: `url(${imgBG})`, }} className='h-full w-full bg-cover bg-center flex justify-center md:justify-end items-cente overflow-hidden'>
             <div className={` mr-0 duration-200 bg-slate-700 bg-opacity-[94%] w-full h-full pt-20 transition-all p-2  overflow-y-auto`}>
                 <div className='flex flex-col w-full  '>
                     {/* <div>Titulo aqui</div> */}
                     <div className='flex lg:flex-row lg:items-start flex-col  items-center w-full justify-center'>
-                        <div className=' max-w-[400px] '><img className=' w-full h-full object-contain' src={imageLoaded && card.url_img != '' ? card.url_img : require('../../assets/imagens/back_card.png')} loading="lazy" onLoad={handleImageLoad}></img></div>
+                        <div className=' max-w-[400px] '><img className=' w-full h-full object-contain' style={estiloDoComponenteCard} src={card && imageLoaded && card?.url_img != '' ? card.url_img : require('../../assets/imagens/back_card.png')} loading="lazy" onLoad={handleImageLoad}></img></div>
                         {/* <img style={{ width: 20, height: 20 }} src={imgIgn}  ></img> */}
                         <div className='max-w-[400px]  flex flex-col px-3 mt-3' >
                             <div className='flex space-x-3'>

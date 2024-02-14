@@ -9,14 +9,9 @@ import NavBar from './componentes/navBar';
 function App() {
   return (
     <div >
-
       <NavBar>
         <Outlet></Outlet>
       </NavBar>
-
-
-
-
     </div>
   );
 }

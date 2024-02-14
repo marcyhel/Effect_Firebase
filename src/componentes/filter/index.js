@@ -32,6 +32,7 @@ const Filtro = ({ toggleDrawer }) => {
         vidaFilter,
         poderFilter,
         fortunasFilter,
+        fortunasCustoFilter,
         subTiposFilter,
         raridadeFilter,
 
@@ -41,6 +42,7 @@ const Filtro = ({ toggleDrawer }) => {
         setVidaFilter,
         setPoderFilter,
         setFortunasFilter,
+        setFortunasCustoFilter,
         setSubTiposFilter,
         setRaridadeFilter
     } = useFilter()
@@ -84,16 +86,21 @@ const Filtro = ({ toggleDrawer }) => {
 
             </div>
 
-            <div className=' border-b border-slate-400 h-0 mt-4'></div>
 
             <div className='flex items-center space-x-3 my-2 mt-4'>
-                <span className='text-xs text-slate-300'>CUSTOS</span>
+                <span className='text-xs text-slate-300'>RARIDADES</span>
                 {divider()}
-                <span className={`${custoFilter.length > 0 ? 'text-yellow-300' : 'text-slate-500'} text-xs cursor-pointer`} onClick={() => { setCustoFilter([]) }}>Limpar</span>
+                {/* <span className={`${causasFilter.length > 0 ? 'text-yellow-300' : 'text-slate-500'} text-xs cursor-pointer`}>Limpar</span> */}
             </div>
-            <div className='flex border border-slate-500'>
-                {custos.map((element) => { return <ItensCheckCost value={element} filter={custoFilter} setValue={setCustoFilter} text={element == '7' ? '+' + element : element}></ItensCheckCost> })}
+            <div className=''>
+                {raridades ? <ItensSelect value={raridades} setValue={setRaridadeFilter} ></ItensSelect> : null}
+
             </div>
+
+
+
+            <div className=' border-b border-slate-400 h-0 mt-4'></div>
+
 
 
 
@@ -117,29 +124,44 @@ const Filtro = ({ toggleDrawer }) => {
 
             <div className=' border-b border-slate-400 h-0 mt-4'></div>
 
-            <div className='flex items-center space-x-3 my-2 mt-4'>
-                <span className='text-xs text-slate-300'>RARIDADES</span>
-                {divider()}
-                {/* <span className={`${causasFilter.length > 0 ? 'text-yellow-300' : 'text-slate-500'} text-xs cursor-pointer`}>Limpar</span> */}
-            </div>
-            <div className=''>
-                {raridades ? <ItensSelect value={raridades} setValue={setRaridadeFilter} ></ItensSelect> : null}
-
-            </div>
 
 
 
 
             <div className='flex items-center space-x-3 my-2 mt-4'>
-                <span className='text-xs text-slate-300'>FORTUNAS</span>
+                <span className='text-xs text-slate-300'>INTERAÇÃO COM FORTUNAS</span>
 
                 {divider()}
                 {/* <span className={`${causasFilter.length > 0 ? 'text-yellow-300' : 'text-slate-500'} text-xs cursor-pointer`}>Limpar</span> */}
             </div>
+
             <div className=''>
                 {fortunas ? <ItensSelect value={fortunas} setValue={setFortunasFilter} ></ItensSelect> : null}
 
             </div>
+
+            <div className='flex items-center space-x-3 my-2 mt-4'>
+                <span className='text-xs text-slate-300'>FORTUNAS NO CUSTO</span>
+
+                {divider()}
+                {/* <span className={`${causasFilter.length > 0 ? 'text-yellow-300' : 'text-slate-500'} text-xs cursor-pointer`}>Limpar</span> */}
+            </div>
+
+            <div className=''>
+                {fortunas ? <ItensSelect value={fortunas} setValue={setFortunasCustoFilter} ></ItensSelect> : null}
+
+            </div>
+
+            <div className='flex items-center space-x-3 my-2 mt-4'>
+                <span className='text-xs text-slate-300'>CUSTOS</span>
+                {divider()}
+                <span className={`${custoFilter.length > 0 ? 'text-yellow-300' : 'text-slate-500'} text-xs cursor-pointer`} onClick={() => { setCustoFilter([]) }}>Limpar</span>
+            </div>
+            <div className='flex border border-slate-500'>
+                {custos.map((element) => { return <ItensCheckCost value={element} filter={custoFilter} setValue={setCustoFilter} text={element == '7' ? '+' + element : element}></ItensCheckCost> })}
+            </div>
+
+
 
 
 
