@@ -3,10 +3,10 @@ import { DefaultContext } from '../../../context/context_default';
 
 import { BarChart } from '@mui/x-charts/BarChart';
 
-const GraficoBarras = () => {
+const GraficoBarras = ({ listCardDeck }) => {
     const {
         listCards,
-        listCardDeck,
+
         setListCardDeck
 
     } = useContext(DefaultContext);

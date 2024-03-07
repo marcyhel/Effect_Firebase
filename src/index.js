@@ -41,6 +41,7 @@ const router = createBrowserRouter([{
     { path: "/", element: <ListaCards /> },
     { path: "/deck-list", element: <DeckList /> },
     { path: "/deck-build", element: <DeckBuild /> },
+    { path: "/edita-deck", element: <DeckBuild editar={true} /> },
     { path: "/list", element: <ListaCards /> },
     { path: "/up-card", element: <UparCardfa /> },
     { path: "/detail/:id", element: <CardDetail /> },

@@ -23,21 +23,11 @@ export function useListCard() {
 
     } = useContext(DefaultContext);
 
-    useEffect(() => {
 
-        // getSubTipos();
-        // getTipos();
-        // getPalavrasChave();
-        // getFortunas();
-        // getCausas();
-        // getRaridade();
-        // getListCards();
-
-
-    }, [])
 
     const [isOpen, setIsOpen] = useState(false);
     const [zoom, setZoom] = useState(true);
+    const [search, setSearch] = useState('');
 
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
@@ -66,9 +56,14 @@ export function useListCard() {
         };
     }, []);
 
+    function searchChange(event) {
+        setSearch(event.target.value);
+    }
+
     function range(start, end) {
         return Array(end - start + 1).fill().map((_, idx) => start + idx)
     }
+
     var list = range(1, 180);
     return {
 
@@ -92,6 +87,8 @@ export function useListCard() {
         toggleDrawer,
         zoom,
         toggleZoom,
-        setZoom
+        setZoom,
+        search,
+        searchChange
     }
 }

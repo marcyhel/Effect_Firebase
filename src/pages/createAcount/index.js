@@ -89,15 +89,15 @@ const CreatAcount = () => {
 
             <div className='w-5/6  max-w-[400px] max-h-[500px] min-h-min backdrop-blur-lg  bg-slate-600 bg-opacity-25 shadow-2xl rounded-lg  md:mr-28 mr-0 lg:mr-44 flex flex-col p-6'>
                 <div className='mb-6'>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
-                    <input onChange={nomeChange} value={nome} type="text" id="first_name" className="border  text-sm rounded-lg  focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 dark:focus:border-blue-500" placeholder="exemplo@gmail.com" required />
+                    <label className="block mb-2 text-sm font-medium  text-white">Nome</label>
+                    <input onChange={nomeChange} value={nome} type="text" id="first_name" className="border  text-sm rounded-lg   block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="João" required />
                 </div>
                 <div className='mb-6'>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                    <input onChange={emailChange} value={email} type="text" id="first_name" className="border  text-sm rounded-lg  focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 dark:focus:border-blue-500" placeholder="exemplo@gmail.com" required />
+                    <label className="block mb-2 text-sm font-medium  text-white">Email</label>
+                    <input onChange={emailChange} value={email} type="text" id="first_name" className="border  text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="exemplo@gmail.com" required />
                 </div>
                 <div className='mb-4'>
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Senha</label>
+                    <label className="block mb-2 text-sm font-medium  text-white">Senha</label>
                     <input onChange={senhaChange} value={senha} type="password" id="first_name" className="border   text-sm rounded-lg   block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="" required />
                 </div>
 

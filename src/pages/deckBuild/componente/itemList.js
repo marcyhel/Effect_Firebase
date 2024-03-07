@@ -22,6 +22,8 @@ const ItemListDeckBuild = ({ item, lessItem, addItem }) => {
     };
 
     useEffect(() => {
+        // console.log("--i", item)
+        // console.log("-", listCards.find(e => e.id == item.id))
         setCard(listCards.find(e => e.id == item.id))
     }, [item])
 
@@ -33,6 +35,9 @@ const ItemListDeckBuild = ({ item, lessItem, addItem }) => {
             setShowCardFlutuante({ y: getPosition(), url_img: card.url_img })
         }, 500);
     };
+    useEffect(() => {
+        // console.log("--", card)
+    }, [card])
 
     const handleMouseLeave = () => {
         setShowCardFlutuante(false);
@@ -52,9 +57,15 @@ const ItemListDeckBuild = ({ item, lessItem, addItem }) => {
                 </div>
                 <div className='rounded bg-auto bg-center w-full h-9 border border-slate-400 mb-1 cursor-pointer select-none' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
                     <div className='bg-gradient-to-r from-slate-800 rounded w-full h-9 flex items-center '>
-                        <div className='flex-1 flex hover:bg-slate-800 hover:bg-opacity-30 pl-1 pt-1 pb-1' onClick={() => { lessItem(item.id) }}>
-                            <div className='flex justify-center items-center p-1 rounded-full border border-slate-800 bg-slate-600 w-6 h-6 mr-2'>{card.custo ? card.custo : 0}</div>
-                            {card.nome}
+                        <div className='w-full flex hover:bg-slate-800 hover:bg-opacity-30 pl-1 pt-1 pb-1 ' onClick={() => { lessItem(item.id) }}>
+                            <div className='flex justify-center items-center p-1 rounded-full border border-slate-800 bg-slate-600 w-6 h-6 mr-2 '>{card.custo ? card.custo : 0}</div>
+                            <div className='w-44'>
+                                <div className='  truncate text-ellipsis'>
+                                    {card.nome}
+                                </div>
+                            </div>
+
+
                             <div className='flex-1'></div>
                         </div>
                         <div className='mr-1 mt-1 mb-1' onClick={() => { addItem(item.id) }}>

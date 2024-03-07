@@ -1,19 +1,20 @@
 import React, { useEffect, useContext, useState } from 'react'
 import { useParams } from "react-router-dom";
 import { DefaultContext } from '../../context/context_default';
-
+import { useNavigate } from "react-router-dom";
 import { Card } from '../listaCards/componentes/card';
 
 import imgBG from "../../assets/imagens/bg_card.jpg";
 import imgIgn from "../../assets/imagens/ign.png";
 import imgVerbus from "../../assets/imagens/verbus.png";
 import imgKarma from "../../assets/imagens/karma.png";
-import imgGnos from "../../assets/imagens/gnus.png";
+import imgGnos from "../../assets/imagens/gnos.png";
 import imgOmna from "../../assets/imagens/omna.png";
 import imgDnama from "../../assets/imagens/dnama.png";
 // import imgIgn from "../../assets/imagens/ign.png";
 // require('../../assets/imagens/ign.png')
 const CardDetail = () => {
+    const navigate = useNavigate()
     const { id } = useParams();
     const [card, setCard] = useState(null)
     const [efeito, setEfeito] = useState(null)
@@ -203,7 +204,7 @@ const CardDetail = () => {
                     <div className='flex justify-center mt-10'>
                         {cardsSemelhantes ?
                             <div className='grid md:grid-cols-4 grid-cols-2 w-fit gap-x-0 gap-y-0'>
-                                {cardsSemelhantes.slice(1, contadorSemelhante + 1).map(item => <div className='mt-[-45px]'><Card card={item} zoom={false} index={1} columMax={contadorSemelhante} /> </div>)}
+                                {cardsSemelhantes.slice(1, contadorSemelhante + 1).map(item => <div onClick={() => { window.location.href = `/detail/${item?.id}`; }} className='mt-[-45px]'><Card card={item} zoom={false} index={1} columMax={contadorSemelhante} /> </div>)}
 
                             </div> : null
                         }

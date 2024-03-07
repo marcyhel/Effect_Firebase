@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import ItensCheck from '../../pages/listaCards/componentes/itensCheck'
 import ItensCheckCost from '../../pages/listaCards/componentes/itensCheckCost';
@@ -9,7 +9,7 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import { useFilter } from './hook'
 
-const Filtro = ({ toggleDrawer }) => {
+const Filtro = ({ toggleDrawer, search = '' }) => {
     const {
         getSubTipos,
         subTipos,
@@ -45,7 +45,8 @@ const Filtro = ({ toggleDrawer }) => {
         setFortunasCustoFilter,
         setSubTiposFilter,
         setRaridadeFilter
-    } = useFilter()
+    } = useFilter(search)
+    // useEffect(() => { console.log(search) }, [search])
     const divider = () => { return (<div className='flex-1 border-b border-slate-600 h-0'></div>) }
     return (
         <div className='flex flex-col justify-start overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600  scrollbar-rounded-sm pr-2 h-full '>

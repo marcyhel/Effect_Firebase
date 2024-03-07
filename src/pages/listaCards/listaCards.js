@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from 'react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import imgBG from "../../assets/imagens/bg_list.jpg";
 import { DefaultContext } from '../../context/context_default';
 import Select from 'react-select'
@@ -33,7 +33,9 @@ const ListaCards = () => {
         toggleDrawer,
         zoom,
         setZoom,
-        toggleZoom
+        toggleZoom,
+        search,
+        searchChange
     } = useListCard()
 
     const [column_count, setColumn_count] = useState(3)
@@ -72,9 +74,9 @@ const ListaCards = () => {
         const card = showListCards[index];
 
         return (
-            <div onClick={card ? () => { navigate("/detail/" + card?.id) } : null} key={key} style={style} className='flex justify-center items-center flex-1'>
+            <Link to={card ? "/detail/" + card?.id : null} key={key} style={style} className='flex justify-center items-center flex-1'>
                 {card && <Card card={card} zoom={zoom} index={columnIndex + 1} columMax={column_count} />}
-            </div>
+            </Link>
         );
     };
     const COLUMN_COUNT = 3;
@@ -90,7 +92,7 @@ const ListaCards = () => {
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                 <SearchRoundedIcon></SearchRoundedIcon>
                             </div>
-                            <input type="text" id="simple-search" class="border   text-sm rounded-lg block w-full ps-10 p-2.5  bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="Procure pelo nome de alguma carta..." required />
+                            <input type="text" id="simple-search" onChange={searchChange} class="border   text-sm rounded-lg block w-full ps-10 p-2.5  bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="Procure pelo nome de alguma carta..." required />
                         </div>
 
                     </div>
@@ -126,7 +128,7 @@ const ListaCards = () => {
             <aside className={`${isOpen ? 'translate-x-0 duration-200' : ' duration-300 translate-x-full '}  bg-slate-700  pt-20 transition-transform  fixed top-0 right-0 z-30 w-80 h-screen shadow-lg flex flex-col p-3 border-l border-slate-600 border-opacity-60`}>
 
 
-                <Filtro toggleDrawer={toggleDrawer} />
+                <Filtro toggleDrawer={toggleDrawer} search={search} />
             </aside>
         </div>
 

@@ -18,7 +18,7 @@ import imgBG from "../assets/imagens/bg_card.jpg";
 import imgIgn from "../assets/imagens/ign.png";
 import imgVerbus from "../assets/imagens/verbus.png";
 import imgKarma from "../assets/imagens/karma.png";
-import imgGnos from "../assets/imagens/gnus.png";
+import imgGnos from "../assets/imagens/gnos.png";
 import imgOmna from "../assets/imagens/omna.png";
 import imgDnama from "../assets/imagens/dnama.png";
 
@@ -44,7 +44,9 @@ export default function DefaultProvider({ children }) {
     });
     const [listCardDeck, setListCardDeck] = useState([]);
     const [listCardDeckMatriz, setListCardDeckMatriz] = useState([]);
-
+    const [quebradorDeck, setQuebradorDeck] = useState(null);
+    const [deckName, setDeckName] = useState('Novo Deck');
+    const [deck_tu_edit, setDeck_tu_edit] = useState(null);
 
     useEffect(() => {
         // console.log("aquii")
@@ -229,6 +231,25 @@ export default function DefaultProvider({ children }) {
     const replacesAll = (string, search, replace) => {
         return string.split(search).join(replace);
     }
+
+    const validar_deckId_vs_userId = () => {
+        if (deck_tu_edit?.user_id && globalFirestoreData?.userId == deck_tu_edit?.user_id) {
+            return true
+        }
+        return false
+
+    }
+    const conta_cartas_lsit = (list) => {
+        return list.reduce((accumulator, currentValue) => accumulator + currentValue.qtd, 0);
+    }
+
+    const resetaDeck = () => {
+        setListCardDeckMatriz([])
+        setListCardDeck([])
+        setQuebradorDeck(null)
+        setDeckName("Novo Deck")
+    }
+
     const replaceText = (text) => {
         var img_quente = '<img style="width : 20px; height: 20px; display:inline; -webkit-filter: drop-shadow(0px 0px 3px #ff0050); filter: drop-shadow(0px 0px 3px #ff0050);" src='
         var img_algida = '<img style="width : 20px; height: 20px; display:inline; -webkit-filter: drop-shadow(0px 0px 3px #00a0ff); filter: drop-shadow(0px 0px 3px #00a0ff);" src='
@@ -292,7 +313,15 @@ export default function DefaultProvider({ children }) {
             listCardDeck,
             setListCardDeck,
             listCardDeckMatriz,
-            setListCardDeckMatriz
+            setListCardDeckMatriz,
+            quebradorDeck,
+            setQuebradorDeck,
+            deck_tu_edit, setDeck_tu_edit,
+            validar_deckId_vs_userId,
+            deckName,
+            setDeckName,
+            conta_cartas_lsit,
+            resetaDeck
         }}>
             {children}
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { DefaultContext } from '../../context/context_default';
-export function useFilter() {
+export function useFilter(search) {
     const {
         getSubTipos,
         subTipos,
@@ -133,12 +133,19 @@ export function useFilter() {
             );
         }
 
+        if (search && search != '') {
+            cartasFiltradas = cartasFiltradas.filter(card => card.nome.toLowerCase().includes(search.toLowerCase()))
+        }
+
+
+
+
 
         setShowListCards(cartasFiltradas)
 
         // console.log(cartasFiltradas)
 
-    }, [filterFetch])
+    }, [filterFetch, search])
 
     return {
         getSubTipos,
