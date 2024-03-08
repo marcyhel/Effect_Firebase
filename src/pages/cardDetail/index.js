@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react'
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { DefaultContext } from '../../context/context_default';
 import { useNavigate } from "react-router-dom";
 import { Card } from '../listaCards/componentes/card';
@@ -204,7 +204,7 @@ const CardDetail = () => {
                     <div className='flex justify-center mt-10'>
                         {cardsSemelhantes ?
                             <div className='grid md:grid-cols-4 grid-cols-2 w-fit gap-x-0 gap-y-0'>
-                                {cardsSemelhantes.slice(1, contadorSemelhante + 1).map(item => <div onClick={() => { window.location.href = `/detail/${item?.id}`; }} className='mt-[-45px]'><Card card={item} zoom={false} index={1} columMax={contadorSemelhante} /> </div>)}
+                                {cardsSemelhantes.slice(1, contadorSemelhante + 1).map(item => <Link to={`/detail/${item?.id}`} onClick={(event) => { if (!event.ctrlKey) { window.location.href = `/detail/${item?.id}`; } }} className='mt-[-45px]'><Card card={item} zoom={false} index={1} columMax={contadorSemelhante} /> </Link>)}
 
                             </div> : null
                         }

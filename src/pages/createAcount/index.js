@@ -3,6 +3,9 @@ import vincent from "../../assets/imagens/vincent_low70.jpg";
 import vincentMob from "../../assets/imagens/vincentMob.jpg";
 import { Link } from 'react-router-dom';
 import { useAlert } from 'react-alert'
+
+import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
+
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import UserDb from '../../database/wrappers/user';
 import {
@@ -86,7 +89,9 @@ const CreatAcount = () => {
 
     return (
         <div style={{ backgroundImage: `url(${imgBG})`, }} className='h-screen w-screen bg-cover bg-center flex justify-center md:justify-end items-center  '>
-
+            <Link to="/login" className='bg-slate-600 shadow bg-opacity-25  backdrop-blur-lg  md:mr-28 mr-0 w-10 h-10 flex justify-center items-center rounded-full top-[5%]  left-[40px] absolute text-white hover:bg-opacity-50 cursor-pointer'>
+                <ArrowBackIosNewRoundedIcon />
+            </Link>
             <div className='w-5/6  max-w-[400px] max-h-[500px] min-h-min backdrop-blur-lg  bg-slate-600 bg-opacity-25 shadow-2xl rounded-lg  md:mr-28 mr-0 lg:mr-44 flex flex-col p-6'>
                 <div className='mb-6'>
                     <label className="block mb-2 text-sm font-medium  text-white">Nome</label>

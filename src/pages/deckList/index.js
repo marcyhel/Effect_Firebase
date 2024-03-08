@@ -141,7 +141,12 @@ const DeckList = () => {
                         </aside>
                     </div>
                     :
-                    <div>Precisa logar 123</div>
+                    <div className='h-full flex flex-col justify-center items-center'>
+                        <div>Desbloqueie o poder do criador de decks! Faça login agora para começar.</div>
+                        <div className='flex justify-end mt-4 select-none mb-6'>
+                            <Link to='/login' className={`bg-orange-500 hover:bg-orange-400 cursor-pointer  rounded-md px-4 py-2`}  >Login</Link>
+                        </div>
+                    </div>
                 }
 
             </div>
