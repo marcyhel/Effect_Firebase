@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useContext, useState } from 'react'
 import { DefaultContext } from '../../../context/context_default';
-import imgBG from "../../../assets/imagens/2.png";
+// import imgBG from "../../../assets/imagens/2.png";
 
 const ItemListDeckBuild = ({ item, lessItem, addItem }) => {
     const [card, setCard] = useState(null);

@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { DefaultContext } from '../../context/context_default';
+import { useNavigate } from "react-router-dom";
+import { serverTimestamp } from "firebase/firestore";
 import { useAlert } from 'react-alert'
 import moment from 'moment';
 import DeckDB from '../../database/wrappers/deck';
@@ -19,6 +21,8 @@ export function useDeckBuild() {
         deck_tu_edit
 
     } = useContext(DefaultContext);
+
+    const navitage = useNavigate()
 
     const [isOpenFilter, setIsOpenFilter] = useState(false);
     const [isOpenDeck, setIsOpenDeck] = useState(false);
@@ -182,13 +186,15 @@ export function useDeckBuild() {
             form['matriz'] = listCardDeckMatriz;
             form['quebrador'] = quebradorDeck.id;
             form['user_id'] = globalFirestoreData.userId;
+            form['timestamp'] = serverTimestamp()
             // form['create_at'] = moment().toString();
             const userDB = new DeckDB()
             await userDB.create(
                 form
             ).then((e) => {
                 alert.success('Deck salvo com sucesso');
-                console.log(e)
+                navitage("/deck-list")
+                // console.log(e)
             }).catch(err => {
                 alert.error('Erro ao salvar deck')
             })
@@ -208,6 +214,7 @@ export function useDeckBuild() {
             form['arvore'] = listCardDeck;
             form['matriz'] = listCardDeckMatriz;
             form['quebrador'] = quebradorDeck.id;
+            form['timestamp'] = serverTimestamp()
             // form['create_at'] = moment().toString();
 
             const userDB = new DeckDB();
@@ -215,7 +222,8 @@ export function useDeckBuild() {
             await userDB.update(deck_tu_edit.id, form) // Assumindo que você tenha um método de atualização no seu DeckDB
                 .then((e) => {
                     alert.success('Deck atualizado com sucesso');
-                    console.log(e);
+                    navitage("/deck-list")
+                    // console.log(e);
                 })
                 .catch(err => {
                     console.error(err);

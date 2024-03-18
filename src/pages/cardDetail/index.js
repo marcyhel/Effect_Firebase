@@ -151,8 +151,8 @@ const CardDetail = () => {
     };
     return (
         <div style={{ backgroundImage: `url(${imgBG})`, }} className='h-full w-full bg-cover bg-center flex justify-center md:justify-end items-cente overflow-hidden'>
-            <div className={` mr-0 duration-200 bg-slate-700 bg-opacity-[94%] w-full h-full pt-20 transition-all p-2  overflow-y-auto`}>
-                <div className='flex flex-col w-full  '>
+            <div className={` mr-0 duration-200 bg-slate-700 bg-opacity-[94%] w-full h-full pt-20 transition-all p-2  overflow-y-auto  scrollbar-thin overflow-x-hidden scrollbar-thumb-slate-600  scrollbar-rounded-sm`}>
+                <div className='flex flex-col w-full   '>
                     {/* <div>Titulo aqui</div> */}
                     <div className='flex lg:flex-row lg:items-start flex-col  items-center w-full justify-center'>
                         <div className=' max-w-[400px] '><img className=' w-full h-full object-contain' style={estiloDoComponenteCard} src={card && imageLoaded && card?.url_img != '' ? card.url_img : require('../../assets/imagens/back_card.png')} loading="lazy" onLoad={handleImageLoad}></img></div>
@@ -178,7 +178,7 @@ const CardDetail = () => {
                             <div className='w-full border-b border-slate-400 my-6' ></div>
                             {card ?
                                 <div className='flex flex-col'>
-                                    <div className='font-bold'>{card.nome}</div>
+                                    <div className='font-bold text-2xl'>{card.nome}</div>
                                     <div className='flex text-sm'>{card.tipo.map(e => tipos.find(t => t.id == e).tipo + ' ')} / {card.sub_tipo.map(e => subTipos.find(t => t.id == e).tipo + ' ')}</div>
                                 </div> : null
                             }
@@ -197,7 +197,7 @@ const CardDetail = () => {
                     </div>
                     <div className='flex items-center px-10 mt-10'>
                         <div className='w-full border-b border-slate-400 my-6' ></div>
-                        <div className='min-w-fit px-6'>Cards Semelhantes</div>
+                        <div className='min-w-fit px-6'>Cards Relacionados</div>
                         <div className='w-full border-b border-slate-400 my-6' ></div>
                     </div>
 

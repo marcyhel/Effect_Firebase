@@ -3,8 +3,9 @@ import causa from "../../assets/imagens/beta_amanna_low70.jpg";
 import causaMob from "../../assets/imagens/beta_amanna_mobile.jpg";
 import { Link } from 'react-router-dom';
 import { useAlert } from 'react-alert'
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../firebase";
+
 import { useNavigate } from "react-router-dom";
 
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
@@ -62,6 +63,25 @@ const Login = () => {
 
     }
 
+    async function recuperaSenha() {
+        setLoad(true)
+        try {
+            if (!email) {
+                alert.info('Informe o email!')
+
+                return false;
+            }
+            await sendPasswordResetEmail(auth, email).then((res) => {
+                console.log(res)
+
+                alert.success('Email de redefinição de senha enviado!')
+            });
+        } catch (err) {
+            alert.error('Erro ao tentar emviar email de recuperação de senha')
+        }
+        setLoad(false)
+
+    }
 
     return (
         <div style={{ backgroundImage: `url(${imgBG})`, }} className='h-screen w-screen bg-cover bg-center flex justify-center md:justify-end items-center  '>
@@ -72,14 +92,14 @@ const Login = () => {
 
                 <div className='mb-6'>
                     <label className="block mb-2 text-sm font-medium  text-white">Email</label>
-                    <input onChange={emailChange} value={email} type="text" id="first_name" className="border  text-sm rounded-lg   block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="exemplo@gmail.com" required />
+                    <input onChange={emailChange} value={email} disabled={load} type="text" id="first_name" className={`${load ? "opacity-50" : ""} border  text-sm rounded-lg   block w-full p-2.5 bg-gray-200 border-gray-300 placeholder-gray-400 text-black focus:ring-blue-500 focus:border-blue-500`} placeholder="exemplo@gmail.com" required />
                 </div>
                 <div className='mb-4'>
                     <label className="block mb-2 text-sm font-medium  text-white">Senha</label>
-                    <input onChange={senhaChange} value={senha} type="password" id="first_name" className="border   text-sm rounded-lg   block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="" required />
+                    <input onChange={senhaChange} value={senha} disabled={load} type="password" id="first_name" className={`${load ? "opacity-50" : ""} border   text-sm rounded-lg   block w-full p-2.5 bg-gray-200 border-gray-300 placeholder-gray-400 text-black focus:ring-blue-500 focus:border-blue-500`} placeholder="" required />
                 </div>
-                <Link className='hover:text-blue-500 text-white mb-11'>Esqueci a minha senha !</Link>
-                <button onClick={() => { realizarLogin() }} className='bg-pink-600 hover:bg-pink-700 py-2 rounded-xl text-white mb-4 flex justify-center items-center'>
+                <Link onClick={() => { recuperaSenha() }} className='hover:text-blue-500 text-white mb-11'>Esqueci a minha senha !</Link>
+                <button onClick={load ? () => { } : () => { realizarLogin() }} disabled={load} className={`${load ? "bg-pink-500 hover:bg-pink-500" : "bg-pink-600 hover:bg-pink-700"} bg-pink-600 hover:bg-pink-700 py-2 rounded-xl text-white mb-4 flex justify-center items-center`}>
                     {load ? <TailSpin
                         height="24"
                         width="24"

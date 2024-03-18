@@ -50,7 +50,11 @@ export function useDeckList() {
     const getDecks = async () => {
         const userDB = new DeckDB()
         if (globalFirestoreData.userId) {
-            await userDB.getAll({ field: 'user_id', operator: '==', value: globalFirestoreData.userId }).then((e) => { setListDecksUser(e); console.log("-1-", e) }).catch(err => { console.log("err", err) })
+            await userDB.getAll({ orderByField: 'timestamp', field: 'user_id', operator: '==', value: globalFirestoreData.userId }).then((e) => {
+                setListDecksUser(e); console.log("-1-", e)
+            }).catch(err => {
+                console.log("err", err)
+            })
         }
 
     }

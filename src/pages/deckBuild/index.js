@@ -178,6 +178,11 @@ const DeckBuild = ({ editar }) => {
             inputReference.current.focus();
         }
     }, [editName])
+    useEffect(() => {
+        if (!isOpenDeck) {
+            setShowCardFlutuante(false);
+        }
+    }, [isOpenDeck])
 
     const divider = () => { return (<div className='flex-1 border-b border-slate-600 h-0'></div>) }
 
@@ -206,7 +211,7 @@ const DeckBuild = ({ editar }) => {
                             </div>
                             <div className='p-4 bg-slate-500 hover:bg-slate-400 text-right w-10 h-10 flex justify-center items-center cursor-pointer rounded' onClick={toggleZoom}>{zoom ? <ZoomOutIcon></ZoomOutIcon> : <ZoomInIcon></ZoomInIcon>}</div>
                             <div className='p-4 bg-slate-500 hover:bg-slate-400 text-right w-10 h-10 flex justify-center items-center cursor-pointer rounded' onClick={toggleDrawerFilter}><FilterAltRoundedIcon></FilterAltRoundedIcon></div>
-                            <div className='p-4 bg-slate-500 hover:bg-slate-400 text-right w-10 h-10 flex justify-center items-center cursor-pointer rounded' onClick={toggleDrawerDeck}><StyleRoundedIcon></StyleRoundedIcon></div>
+                            <div className='p-4 bg-slate-500 hover:bg-slate-400 text-right w-10 h-10 flex justify-center items-center cursor-pointer rounded' onClick={toggleDrawerDeck}><StyleRoundedIcon className='rotate-180'></StyleRoundedIcon></div>
 
                         </div>
 
@@ -259,13 +264,13 @@ const DeckBuild = ({ editar }) => {
 
                                 </div>
                                 {listCardDeck && listCardDeckMatriz ?
-                                    <div className='flex items-center justify-around space-x-3 my-2 mt-4 rounded-md border border-slate-800 bg-slate-800 bg-opacity-50 p-3'>
+                                    <div className='flex items-center justify-around space-x-3 my-2 mt-4 rounded-md border border-slate-800 bg-slate-800 bg-opacity-50 p-1'>
 
-                                        <div className='text-2xl text-slate-300 flex flex-col items-center'><div>Arvore</div><div>
+                                        <div className='text-2xl text-slate-300 flex flex-col items-center'><div className='text-sm'>Arvore</div><div>
                                             {conta_cartas_lsit(listCardDeck)}/
                                             {conta_cartas_lsit(listCardDeck) > 40 ? '50' : conta_cartas_lsit(listCardDeck) > 30 ? '40' : '30'}
                                         </div></div>
-                                        <div className='text-2xl text-slate-300 flex flex-col items-center'><div>Matriz</div><div>
+                                        <div className='text-2xl text-slate-300 flex flex-col items-center'><div className='text-sm'>Matriz</div><div>
                                             {conta_cartas_lsit(listCardDeckMatriz)}/
                                             {conta_cartas_lsit(listCardDeckMatriz) > 40 ? '50' : conta_cartas_lsit(listCardDeckMatriz) > 30 ? '40' : '30'}
                                         </div></div>

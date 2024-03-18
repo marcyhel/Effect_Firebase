@@ -1,4 +1,4 @@
-import { FieldPath, getFirestore, collection, getDocs, query, where, and, or, QueryConstraint, getDoc, setDoc, DocumentReference, DocumentData, doc, Unsubscribe, onSnapshot, CollectionReference, addDoc, updateDoc, deleteDoc, serverTimestamp } from "firebase/firestore"
+import { FieldPath, getFirestore, collection, getDocs, query, where, orderBy, getDoc, doc, limit, addDoc, updateDoc, startAfter, deleteDoc, serverTimestamp } from "firebase/firestore"
 import { FirebaseStorage, getStorage, ref, uploadBytes, StorageReference, deleteObjectref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../firebase";
 // import Command from '../entities/stores/command';
@@ -64,14 +64,18 @@ class DeckDB {
     }
 
     async getAll(params = {}) {
-        const { field, operator, value } = params;
+        const { field, operator, value, orderby = 'created_at' } = params;
 
         let collectionRef = collection(db, this.collection);
 
         // Verifica se há parâmetros de filtro
         if (field && operator && value) {
+
             collectionRef = query(collectionRef, where(field, operator, value));
+
+            // collectionRef = query(collectionRef, orderBy('updated_at', 'desc'));
         }
+        collectionRef = query(collectionRef, orderBy('timestamp', 'desc'));
 
         const querySnapshot = await getDocs(collectionRef);
 
@@ -80,6 +84,40 @@ class DeckDB {
         return datas;
     }
 
+
+    async getAllCommunit(params = {}) {
+        const { field, operator, value, orderby = 'created_at', after = null } = params;
+
+        let collectionRef = collection(db, this.collection);
+        let collectionRefcont = collection(db, this.collection);
+
+        // Verifica se há parâmetros de filtro
+        if (field && operator && value) {
+            console.log("ddfd", field, operator, value)
+            collectionRef = query(collectionRef, where(field, operator, value), orderBy('nome'), orderBy('timestamp', 'desc'), limit(10));
+            collectionRefcont = query(collectionRefcont, where(field, operator, value), orderBy('nome'), orderBy('timestamp', 'desc'), limit(10));
+            // collectionRef = query(collectionRef, orderBy('updated_at', 'desc'));
+        }
+        else if (after) {
+            console.log('Aff')
+            collectionRef = query(collectionRef, orderBy('timestamp', 'desc'), startAfter(after), limit(10));
+            collectionRefcont = query(collectionRefcont, orderBy('timestamp', 'desc'));
+        } else {
+            console.log('fff')
+            collectionRef = query(collectionRef, orderBy('timestamp', 'desc'), limit(10));
+            collectionRefcont = query(collectionRefcont, orderBy('timestamp', 'desc'));
+        }
+
+
+
+
+        const querySnapshot = await getDocs(collectionRef);
+        const querySnapshotCount = await getDocs(collectionRefcont);
+
+        const datas = [];
+        querySnapshot.forEach(doc => datas.push({ id: doc.id, ...doc.data() }));
+        return { datas, querySnapshot, size: querySnapshotCount.size };
+    }
 
 
 

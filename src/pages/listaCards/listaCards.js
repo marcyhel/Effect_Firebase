@@ -83,48 +83,51 @@ const ListaCards = () => {
     return (
 
         <div style={{ backgroundImage: `url(${imgBG})`, }} className='h-full w-full bg-cover bg-center flex justify-center md:justify-end items-cente overflow-hidden'>
-            <div className={`${isOpen ? 'md:mr-[320px] duration-200' : 'mr-0 duration-200'} bg-slate-700 bg-opacity-[94%] w-full h-full pt-20 transition-all p-2  `}>
-                <div className='flex space-x-2 mb-2 items-end'>
+            <div className={`${isOpen ? 'md:mr-[320px] duration-200' : 'mr-0 duration-200'} bg-slate-700 bg-opacity-[94%] w-full h-full pt-20 transition-all  `}>
+                <div className='bg-gradient-to-b from-transparent via-transparent to-slate-900 w-full h-full p-2 '>
+                    <div className='flex space-x-2 mb-2 items-end'>
 
-                    <div className='flex-1 flex lg:space-x-2 lg:flex-row flex-col  lg:items-center justify-center '>
-                        <span className='min-w-fit text-2xl font-bold'>Galeria de Cards</span>
-                        <div class="relative w-full">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                <SearchRoundedIcon></SearchRoundedIcon>
+                        <div className='flex-1 flex lg:space-x-2 lg:flex-row flex-col  lg:items-center justify-center '>
+                            <span className='min-w-fit text-2xl font-bold'>Galeria de Cards</span>
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <SearchRoundedIcon></SearchRoundedIcon>
+                                </div>
+                                <input type="text" id="simple-search" onChange={searchChange} class="border   text-sm rounded-lg block w-full ps-10 p-2.5  bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="Procure pelo nome de alguma carta..." required />
                             </div>
-                            <input type="text" id="simple-search" onChange={searchChange} class="border   text-sm rounded-lg block w-full ps-10 p-2.5  bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="Procure pelo nome de alguma carta..." required />
+
                         </div>
-
+                        <div className='p-4 bg-slate-500 hover:bg-slate-400 text-right w-10 h-10 flex justify-center items-center cursor-pointer rounded' onClick={toggleZoom}>{zoom ? <ZoomOutIcon></ZoomOutIcon> : <ZoomInIcon></ZoomInIcon>}</div>
+                        <div className='p-4 bg-slate-500 hover:bg-slate-400 text-right w-10 h-10 flex justify-center items-center cursor-pointer rounded' onClick={toggleDrawer}><FilterAltRoundedIcon></FilterAltRoundedIcon></div>
                     </div>
-                    <div className='p-4 bg-slate-500 hover:bg-slate-400 text-right w-10 h-10 flex justify-center items-center cursor-pointer rounded' onClick={toggleZoom}>{zoom ? <ZoomOutIcon></ZoomOutIcon> : <ZoomInIcon></ZoomInIcon>}</div>
-                    <div className='p-4 bg-slate-500 hover:bg-slate-400 text-right w-10 h-10 flex justify-center items-center cursor-pointer rounded' onClick={toggleDrawer}><FilterAltRoundedIcon></FilterAltRoundedIcon></div>
+
+                    <div className={` w-full h-[99%]  pb-[40px]   `}>
+                        <AutoSizer>
+                            {({ height, width }) => {
+                                // console.log(height, width)
+                                calc_column(width)
+
+                                return (
+                                    <Grid
+                                        className={`justify-center  scrollbar-thin scrollbar-thumb-slate-600  scrollbar-rounded-sm  `}
+                                        key={forceGridUpdate}
+                                        cellRenderer={cellRenderer}
+                                        columnCount={column_count}
+                                        columnWidth={(column_count == 1 ? width : column_count == 2 ? width / 2.2 : (zoom ? 245 : 145))} // Largura de cada coluna
+                                        height={height}
+                                        rowCount={Math.ceil(showListCards.length / column_count)}
+                                        rowHeight={(zoom ? 345 : 205)} // Altura de cada linha
+                                        width={width} // Largura total do grid
+                                    />
+                                )
+                            }}
+                        </AutoSizer>
+                        {/* {listCards.map(item => { return <Card card={item} zoom={zoom} /> })} */}
+                    </div>
+
                 </div>
-
-                <div className={` w-full h-[99%]  pb-[40px]   `}>
-                    <AutoSizer>
-                        {({ height, width }) => {
-                            // console.log(height, width)
-                            calc_column(width)
-
-                            return (
-                                <Grid
-                                    className={`justify-center  scrollbar-thin scrollbar-thumb-slate-600  scrollbar-rounded-sm  `}
-                                    key={forceGridUpdate}
-                                    cellRenderer={cellRenderer}
-                                    columnCount={column_count}
-                                    columnWidth={(column_count == 1 ? width : column_count == 2 ? width / 2.2 : (zoom ? 245 : 145))} // Largura de cada coluna
-                                    height={height}
-                                    rowCount={Math.ceil(showListCards.length / column_count)}
-                                    rowHeight={(zoom ? 345 : 205)} // Altura de cada linha
-                                    width={width} // Largura total do grid
-                                />
-                            )
-                        }}
-                    </AutoSizer>
-                    {/* {listCards.map(item => { return <Card card={item} zoom={zoom} /> })} */}
-                </div>
-
             </div>
+
             <aside className={`${isOpen ? 'translate-x-0 duration-200' : ' duration-300 translate-x-full '}  bg-slate-700  pt-20 transition-transform  fixed top-0 right-0 z-30 w-80 h-screen shadow-lg flex flex-col p-3 border-l border-slate-600 border-opacity-60`}>
 
 

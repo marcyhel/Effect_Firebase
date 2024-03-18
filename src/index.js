@@ -17,6 +17,7 @@ import CreatAcount from './pages/createAcount';
 import ListaCards from './pages/listaCards/listaCards';
 import CardDetail from './pages/cardDetail';
 import DeckBuild from './pages/deckBuild';
+import DeckCommunit from './pages/deckCommunit';
 
 const options = {
   // you can also just use 'bottom center'
@@ -40,6 +41,7 @@ const router = createBrowserRouter([{
   children: [
     { path: "/", element: <ListaCards /> },
     { path: "/deck-list", element: <DeckList /> },
+    { path: "/deck-communit", element: <DeckCommunit /> },
     { path: "/deck-build", element: <DeckBuild /> },
     { path: "/edita-deck", element: <DeckBuild editar={true} /> },
     { path: "/list", element: <ListaCards /> },

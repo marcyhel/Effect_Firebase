@@ -29,6 +29,7 @@ export default function DefaultProvider({ children }) {
 
     const [is_descktop, setIs_descktop] = useState(true);
     const [globalFirestoreData, setGlobalFirestoreData] = useState({});
+    const [usersList, setUsersList] = useState([]);
     const [subTipos, setSubTipos] = useState([]);
     const [tipos, setTipos] = useState([]);
     const [palavraChave, setPalavraChave] = useState([]);
@@ -126,6 +127,7 @@ export default function DefaultProvider({ children }) {
     }, []);
     useEffect(() => {
         getSubTipos();
+        getUsers();
         getTipos();
         getPalavrasChave();
         getFortunas();
@@ -223,6 +225,15 @@ export default function DefaultProvider({ children }) {
         }
 
     }
+    const getUsers = async () => {
+        if (raridades.length == 0) {
+            const raridadesDB = new UserDb()
+            await raridadesDB.getAll().then(resultado => {
+                setUsersList(resultado)
+            })
+        }
+    }
+
     function HTMLRenderer({ html }) {
         return <div dangerouslySetInnerHTML={{ __html: html }} />;
     }
@@ -321,7 +332,8 @@ export default function DefaultProvider({ children }) {
             deckName,
             setDeckName,
             conta_cartas_lsit,
-            resetaDeck
+            resetaDeck,
+            usersList,
         }}>
             {children}
 

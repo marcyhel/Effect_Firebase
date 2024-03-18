@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { DefaultContext } from '../../../context/context_default';
 
-import imgBG from "../../../assets/imagens/2.png";
-import imgBG2 from "../../../assets/imagens/97. Thallarsce Quebrador de Realidades.png";
+// import imgBG from "../../../assets/imagens/2.png";
+// import imgBG2 from "../../../assets/imagens/97. Thallarsce Quebrador de Realidades.png";
 
-const ItemListDeck = ({ deck }) => {
+const ItemListDeck = ({ deck, profile = false }) => {
     const {
         getSubTipos,
         subTipos,
@@ -32,7 +32,8 @@ const ItemListDeck = ({ deck }) => {
         setListCardDeckMatriz,
         quebradorDeck,
         setQuebradorDeck,
-        globalFirestoreData
+        globalFirestoreData,
+        usersList
 
     } = useContext(DefaultContext);
     const [card, setCard] = useState(null);
@@ -130,9 +131,13 @@ const ItemListDeck = ({ deck }) => {
                 <div className='bg-gradient-to-b from-transparent  to-slate-800 w-full h-full flex flex-col justify-end p-2'>
                     <div className='flex justify-between items-center'>< div className='text-xs' >{deck?.updated_at ? calcularDiferenca(deck?.updated_at, true) : calcularDiferenca(deck?.created_at, false)}</div > <div className='w-10 h-10'>{causa ? <img style={estiloDoComponente} src={require('../../../assets/imagens/' + causa.causa + '.png')}></img> : null}</div></div>
                     <div className='flex-1'></div>
-                    < div style={{ textShadow: '0px 0px 3px rgba(0, 0, 0, 1)' }} className=' shadow font-bold' >{deck.nome}</div >
+                    < div style={{ textShadow: '0px 0px 3px rgba(0, 0, 0, 1)' }} className='  font-bold' >{deck.nome}</div >
+                    <div>
+                        <img></img>
+                        <div>{usersList.find(e => e.id == deck.user_id)?.nome}</div>
+                    </div>
                     <div className='border-b border-slate-200 border-opacity-50'></div>
-                    < div className='flex mt-2' >
+                    < div className='flex mt-2 md:h-6 h-5' >
                         {fortunas_finais ? fortunas_finais.map(el => {
                             return <img className=" md:w-6  w-5" style={(el.tipo == 'Ign' || el.tipo == 'Karma' || el.tipo == 'Verbus') ? estiloDoComponentFortunasquentes : estiloDoComponentFortunaslgidas} src={require('../../../assets/imagens/' + el.tipo.toLowerCase() + '.png')} ></img>
                         }) : null}

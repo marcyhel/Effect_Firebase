@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, query, QueryConstraint, getDoc, setDoc, DocumentReference, DocumentData, doc, Unsubscribe, onSnapshot, CollectionReference, addDoc, updateDoc, deleteDoc, serverTimestamp } from "firebase/firestore"
+import { getFirestore, collection, getDocs, query, QueryConstraint, getDoc, setDoc, doc, where, serverTimestamp } from "firebase/firestore"
 import { FirebaseStorage, getStorage, ref, uploadBytes, getDownloadURL, StorageReference, deleteObject } from "firebase/storage";
 // import Command from '../entities/stores/command';
 import GlocalFirestoreData from '../globalData';
@@ -37,6 +37,26 @@ class UserDb {
             id: snapshot.id,
             ...snapshot.data(),
         }
+    }
+
+    async getAll(params = {}) {
+        const { field, operator, value, orderby = 'created_at' } = params;
+
+        let collectionRef = collection(db, this.collection);
+
+        // Verifica se há parâmetros de filtro
+        if (field && operator && value) {
+            collectionRef = query(collectionRef, where(field, operator, value));
+
+            // collectionRef = query(collectionRef, orderBy('updated_at', 'desc'));
+        }
+        // collectionRef = query(collectionRef, orderBy('timestamp', 'desc'));
+
+        const querySnapshot = await getDocs(collectionRef);
+
+        const datas = [];
+        querySnapshot.forEach(doc => datas.push({ id: doc.id, ...doc.data() }));
+        return datas;
     }
 
     // async getByCpf(cpf) {
