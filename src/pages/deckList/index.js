@@ -34,7 +34,8 @@ const DeckList = () => {
         is_descktop,
         setDeck_tu_edit,
         conta_cartas_lsit,
-        setShowCardFlutuante
+        setShowCardFlutuante,
+        share_deck
     } = useContext(DefaultContext);
     const divider = () => { return (<div className='flex-1 border-b border-slate-600 h-0'></div>) }
 
@@ -82,6 +83,8 @@ const DeckList = () => {
 
                             </Link>
 
+
+
                             {listDecksUser ? listDecksUser.map(item => { return <div onClick={() => { toggleDrawerDeck(true); changeDeck(item) }}><ItemListDeck deck={item}></ItemListDeck> </div> }) : null}
                             <aside className={`${isOpenDeck ? 'translate-x-0 duration-200' : ' duration-300 translate-x-full '} overflow-x-visible bg-slate-700  pt-16 transition-transform  fixed top-0 right-0 z-30 w-80 h-screen shadow-lg flex flex-col p-3 border-l border-slate-600 border-opacity-60`}>
 
@@ -91,7 +94,7 @@ const DeckList = () => {
                                             <div className='flex items-center '  >
 
 
-                                                <span className='cursor-pointer'>{deckSelect.nome}</span>
+                                                <span className='cursor-pointer font-bold'>{deckSelect.nome}</span>
 
 
 
@@ -101,6 +104,8 @@ const DeckList = () => {
                                             </div>
 
                                         </div>
+
+                                        <div className='text-xs'>{deckSelect?.share || deckSelect?.share == null ? "Deck Público" : 'Deck Privado'}</div>
 
                                         <div className='flex items-center justify-around space-x-3 my-2 mt-4 rounded-md border border-slate-800 bg-slate-800 bg-opacity-50 p-1'>
                                             <div className='text-2xl text-slate-300 flex flex-col items-center'><div className='text-sm'>Arvore</div><div>

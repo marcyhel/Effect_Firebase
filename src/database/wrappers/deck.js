@@ -94,18 +94,18 @@ class DeckDB {
         // Verifica se há parâmetros de filtro
         if (field && operator && value) {
             console.log("ddfd", field, operator, value)
-            collectionRef = query(collectionRef, where(field, operator, value), orderBy('nome'), orderBy('timestamp', 'desc'), limit(10));
-            collectionRefcont = query(collectionRefcont, where(field, operator, value), orderBy('nome'), orderBy('timestamp', 'desc'), limit(10));
+            collectionRef = query(collectionRef, where('share', '!=', false), where(field, operator, value), orderBy('nome'), orderBy('timestamp', 'desc'), limit(10));
+            collectionRefcont = query(collectionRefcont, where('share', '!=', false), where(field, operator, value), orderBy('nome'), orderBy('timestamp', 'desc'), limit(10));
             // collectionRef = query(collectionRef, orderBy('updated_at', 'desc'));
         }
         else if (after) {
             console.log('Aff')
-            collectionRef = query(collectionRef, orderBy('timestamp', 'desc'), startAfter(after), limit(10));
-            collectionRefcont = query(collectionRefcont, orderBy('timestamp', 'desc'));
+            collectionRef = query(collectionRef, where('share', '!=', false), orderBy('timestamp', 'desc'), startAfter(after), limit(10));
+            collectionRefcont = query(collectionRefcont, where('share', '!=', false), orderBy('timestamp', 'desc'));
         } else {
             console.log('fff')
-            collectionRef = query(collectionRef, orderBy('timestamp', 'desc'), limit(10));
-            collectionRefcont = query(collectionRefcont, orderBy('timestamp', 'desc'));
+            collectionRef = query(collectionRef, where('share', '!=', false), orderBy('timestamp', 'desc'), limit(10));
+            collectionRefcont = query(collectionRefcont, where('share', '!=', false), orderBy('timestamp', 'desc'));
         }
 
 

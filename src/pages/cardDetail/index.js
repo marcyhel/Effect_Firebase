@@ -155,7 +155,13 @@ const CardDetail = () => {
                 <div className='flex flex-col w-full   '>
                     {/* <div>Titulo aqui</div> */}
                     <div className='flex lg:flex-row lg:items-start flex-col  items-center w-full justify-center'>
-                        <div className=' max-w-[400px] '><img className=' w-full h-full object-contain' style={estiloDoComponenteCard} src={card && imageLoaded && card?.url_img != '' ? card.url_img : require('../../assets/imagens/back_card.png')} loading="lazy" onLoad={handleImageLoad}></img></div>
+                        <div className=' max-w-[400px] '>
+                            <div className=' overflow-x-auto relative'>
+                                <img className=' w-full h-full object-contain  top-0 left-0' style={estiloDoComponenteCard} src={card && imageLoaded && card?.url_img != '' ? card.url_img : require('../../assets/imagens/back_card.png')} loading="lazy" onLoad={handleImageLoad}></img>
+
+                            </div>
+
+                        </div>
                         {/* <img style={{ width: 20, height: 20 }} src={imgIgn}  ></img> */}
                         <div className='max-w-[400px]  flex flex-col px-3 mt-3' >
                             <div className='flex space-x-3'>

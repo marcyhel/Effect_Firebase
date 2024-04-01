@@ -8,6 +8,7 @@ import { useListCard } from './hooks';
 
 import { Card } from './componentes/card';
 import Filtro from '../../componentes/filter';
+import AdsComponent from '../componentes/adsense';
 
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
@@ -102,6 +103,16 @@ const ListaCards = () => {
                     </div>
 
                     <div className={` w-full h-[99%]  pb-[40px]   `}>
+
+
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3580760315178127"
+                            crossorigin="anonymous"></script>
+
+
+
+
+
+
                         <AutoSizer>
                             {({ height, width }) => {
                                 // console.log(height, width)

@@ -48,6 +48,7 @@ export default function DefaultProvider({ children }) {
     const [quebradorDeck, setQuebradorDeck] = useState(null);
     const [deckName, setDeckName] = useState('Novo Deck');
     const [deck_tu_edit, setDeck_tu_edit] = useState(null);
+    const [share_deck, setShare_deck] = useState(true);
 
     useEffect(() => {
         // console.log("aquii")
@@ -259,6 +260,7 @@ export default function DefaultProvider({ children }) {
         setListCardDeck([])
         setQuebradorDeck(null)
         setDeckName("Novo Deck")
+        setShare_deck(true)
     }
 
     const replaceText = (text) => {
@@ -334,6 +336,7 @@ export default function DefaultProvider({ children }) {
             conta_cartas_lsit,
             resetaDeck,
             usersList,
+            share_deck, setShare_deck
         }}>
             {children}
 

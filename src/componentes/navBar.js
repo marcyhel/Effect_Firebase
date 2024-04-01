@@ -9,6 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
+import AdsComponent from '../pages/componentes/adsense';
+
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import GridViewIcon from '@mui/icons-material/GridView';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -183,6 +185,8 @@ const NavBar = (props) => {
                                 <span className="flex-1 ms-3 whitespace-nowrap">Sign Up</span>
                             </a>
                         </li> */}
+
+
                     </ul>
                 </div>
             </aside>

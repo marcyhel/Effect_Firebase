@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState, useRef } from 'react'
 import { Link } from "react-router-dom";
 import { AutoSizer, List, Grid } from 'react-virtualized';
+import Switch from "react-switch";
 
 import { DefaultContext } from '../../context/context_default';
 import { useDeckBuild } from './hooks';
@@ -51,7 +52,8 @@ const DeckBuild = ({ editar }) => {
         deck_tu_edit,
         deckName,
         setDeckName,
-        conta_cartas_lsit
+        conta_cartas_lsit,
+        share_deck, setShare_deck
 
     } = useContext(DefaultContext);
 
@@ -97,7 +99,9 @@ const DeckBuild = ({ editar }) => {
     const [forceGridUpdate, setForceGridUpdate] = useState(false); // Estado para forçar a atualização
     const inputReference = useRef(null);
 
-
+    const handleChange = (checked) => {
+        setShare_deck(checked)
+    }
     const delay = async (ms) => {
         return new Promise((resolve) =>
             setTimeout(resolve, ms));
@@ -137,6 +141,8 @@ const DeckBuild = ({ editar }) => {
             setListCardDeck(deck_tu_edit.arvore)
             setQuebradorDeck({ id: deck_tu_edit.quebrador })
             setDeckName(deck_tu_edit.nome)
+            console.log(deck_tu_edit)
+            setShare_deck(deck_tu_edit?.share != null ? deck_tu_edit.share : true)
         } else {
             if (editar) {
                 setEditMode(false);
@@ -263,6 +269,19 @@ const DeckBuild = ({ editar }) => {
                                     </div>
 
                                 </div>
+                                <label className='flex justify-between items-center mt-2'>
+                                    <span>Tornar deck público.</span>
+                                    <Switch onChange={handleChange} checked={share_deck}
+                                        onColor="#ff9336"
+                                        onHandleColor="#f97316"
+                                        handleDiameter={20}
+                                        uncheckedIcon={false}
+                                        checkedIcon={false}
+                                        boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                                        activeBoxShadow="0px 0px 1px 5px rgba(0, 0, 0, 0.2)"
+                                        height={10}
+                                        width={35} />
+                                </label>
                                 {listCardDeck && listCardDeckMatriz ?
                                     <div className='flex items-center justify-around space-x-3 my-2 mt-4 rounded-md border border-slate-800 bg-slate-800 bg-opacity-50 p-1'>
 

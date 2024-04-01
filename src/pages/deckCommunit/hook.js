@@ -80,7 +80,7 @@ export function useDeckCommunit() {
         setSnapShot(null)
         setSnapSize(0)
         setListDecksUser([]);
-        getDecks('nome', '<=', search, true)
+        getDecks('nome', '>=', search, true)
 
         // .where('name', '>=', queryText)
         // .where('name', '<=', queryText+ '\uf8ff')

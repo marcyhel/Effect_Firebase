@@ -18,7 +18,8 @@ export function useDeckBuild() {
         setQuebradorDeck,
         globalFirestoreData,
         deckName, setDeckName,
-        deck_tu_edit
+        deck_tu_edit,
+        share_deck, setShare_deck
 
     } = useContext(DefaultContext);
 
@@ -186,7 +187,8 @@ export function useDeckBuild() {
             form['matriz'] = listCardDeckMatriz;
             form['quebrador'] = quebradorDeck.id;
             form['user_id'] = globalFirestoreData.userId;
-            form['timestamp'] = serverTimestamp()
+            form['timestamp'] = serverTimestamp();
+            form['share'] = share_deck;
             // form['create_at'] = moment().toString();
             const userDB = new DeckDB()
             await userDB.create(
@@ -214,7 +216,8 @@ export function useDeckBuild() {
             form['arvore'] = listCardDeck;
             form['matriz'] = listCardDeckMatriz;
             form['quebrador'] = quebradorDeck.id;
-            form['timestamp'] = serverTimestamp()
+            form['timestamp'] = serverTimestamp();
+            form['share'] = share_deck;
             // form['create_at'] = moment().toString();
 
             const userDB = new DeckDB();
