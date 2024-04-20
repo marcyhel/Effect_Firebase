@@ -86,18 +86,18 @@ const DeckCommunit = () => {
                 <div id='lista' className='bg-gradient-to-b from-transparent via-transparent to-slate-900 w-full h-full p-4 overflow-y-auto  scrollbar-thin scrollbar-thumb-slate-600  scrollbar-rounded-sm '>
                     <div className='flex space-x-2 mb-2 items-end'>
 
-                        <div className='flex-1 flex lg:space-x-2 lg:flex-row flex-col  lg:items-center justify-center '>
+                        <div className='flex-1 flex  lg:space-x-2 lg:flex-row flex-col  lg:items-center justify-start '>
                             <span className='min-w-fit text-2xl font-bold'>Galeria de Decks</span>
-                            <div class="relative w-full">
+                            {/* <div class="relative w-full">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                     <SearchRoundedIcon></SearchRoundedIcon>
                                 </div>
                                 <input type="text" id="simple-search" onChange={handleInputChange} class="border   text-sm rounded-lg block w-full ps-10 p-2.5  bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="Procure pelo nome de algum deck..." required />
-                            </div>
+                            </div> */}
 
                         </div>
                         {/* <div className='p-4 bg-slate-500 hover:bg-slate-400 text-right w-10 h-10 flex justify-center items-center cursor-pointer rounded' onClick={() => { }}>{zoom ? <ZoomOutIcon></ZoomOutIcon> : <ZoomInIcon></ZoomInIcon>}</div> */}
-                        <div className='p-4 bg-slate-500 hover:bg-slate-400 text-right w-10 h-10 flex justify-center items-center cursor-pointer rounded' onClick={() => { toggleDrawerFilter(!isOpenFilter) }}><FilterAltRoundedIcon></FilterAltRoundedIcon></div>
+                        {/* <div className='p-4 bg-slate-500 hover:bg-slate-400 text-right w-10 h-10 flex justify-center items-center cursor-pointer rounded' onClick={() => { toggleDrawerFilter(!isOpenFilter) }}><FilterAltRoundedIcon></FilterAltRoundedIcon></div> */}
                     </div>
 
 
@@ -117,7 +117,7 @@ const DeckCommunit = () => {
                         {listDecksUser ? listDecksUser.map(item => { return <div onClick={() => { toggleDrawerDeck(true); changeDeck(item) }}><ItemListDeck deck={item} profile={true}></ItemListDeck> </div> }) : null}
                         <div className='w-full flex justify-center' >{snapSize > listDecksUser.length ? <div className='cursor-pointer border border-slate-500 hover:bg-slate-400 px-4 py-2 rounded' onClick={NextPlan}>Carregar mais</div> : null}</div>
 
-                        <aside className={`${isOpenFilter ? 'translate-x-0 duration-200' : ' duration-300 translate-x-full '} overflow-x-visible bg-slate-700  pt-16 transition-transform  fixed top-0 right-0 z-30 w-80 h-screen shadow-lg flex flex-col p-3 border-l border-slate-600 border-opacity-60`}>
+                        {/* <aside className={`${isOpenFilter ? 'translate-x-0 duration-200' : ' duration-300 translate-x-full '} overflow-x-visible bg-slate-700  pt-16 transition-transform  fixed top-0 right-0 z-30 w-80 h-screen shadow-lg flex flex-col p-3 border-l border-slate-600 border-opacity-60`}>
 
 
                             <div className='flex flex-col justify-start overflow-y-auto  scrollbar-thin overflow-x-hidden scrollbar-thumb-slate-600  scrollbar-rounded-sm pr-2 h-full pt-4'>
@@ -140,7 +140,7 @@ const DeckCommunit = () => {
 
 
                             </div>
-                        </aside>
+                        </aside> */}
                         <aside className={`${isOpenDeck ? 'translate-x-0 duration-200' : ' duration-300 translate-x-full '} overflow-x-visible bg-slate-700  pt-16 transition-transform  fixed top-0 right-0 z-30 w-80 h-screen shadow-lg flex flex-col p-3 border-l border-slate-600 border-opacity-60`}>
 
                             {deckSelect ?

@@ -163,8 +163,8 @@ const DeckList = () => {
                     :
                     <div className='h-full flex flex-col justify-center items-center relative  bg-gradient-to-b from-transparent via-transparent to-slate-900'>
                         <div className='flex items-end justify-between w-full h-full absolute mb-[-3px]'>
-                            <img style={estiloDoComponenteImg} className='md:h-[100%]  h-[390px] mb-[-80px] ml-[calc(-50vh_+_10vw)]' src={imgPrimura}></img>
-                            <img style={estiloDoComponenteImg} className='md:h-[100%] h-[390px] mb-[-50px] mr-[calc(-60vh_+_10vw)]' src={imgEnneda}></img>
+                            {/* <img style={estiloDoComponenteImg} className='md:h-[100%]  h-[390px] mb-[-80px] ml-[calc(-50vh_+_10vw)]' src={imgPrimura}></img>
+                            <img style={estiloDoComponenteImg} className='md:h-[100%] h-[390px] mb-[-50px] mr-[calc(-60vh_+_10vw)]' src={imgEnneda}></img> */}
                         </div>
 
 

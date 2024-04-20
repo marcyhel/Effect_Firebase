@@ -65,7 +65,7 @@ export const Card = ({ card, zoom, index, columMax }) => {
 
                 <img className=' w-full h-full object-contain' style={estiloDoComponenteCard} src={imageLoaded ? card.url_img : require('../../../assets/imagens/back_card.png')} loading="lazy" onLoad={handleImageLoad}></img>
             </div>
-            <div className={`absolute w-[250px] h-9 top-0 mt-4 ${(!zoom ? (index === columMax || index === columMax - 1) : (index === columMax)) ? "left-[-250px]" : "right-[-250px]"}  z-20 opacity-0 ${showOverlay ? "opacity-100 visible" : "invisible"} transition duration-300 flex flex-col space-y-2`}>
+            {!is_descktop ? null : <div className={`absolute w-[250px] h-9 top-0 mt-4 ${(!zoom ? (index === columMax || index === columMax - 1) : (index === columMax)) ? "left-[-250px]" : "right-[-250px]"}  z-20 opacity-0 ${showOverlay ? "opacity-100 visible" : "invisible"} transition duration-300 flex flex-col space-y-2`}>
                 {palavraChave && card ? card.p_c.map(id => {
                     return <div className=' bg-slate-800 text-white  border-l-4 border-blue-500'>
                         <div className='p-2'>{palavraChave.find(item => item.id == id).nome}</div>
@@ -74,7 +74,7 @@ export const Card = ({ card, zoom, index, columMax }) => {
                     </div>
                 }) : null}
 
-            </div>
+            </div>}
 
         </div>
     )

@@ -1,5 +1,5 @@
 import { FieldPath, getFirestore, collection, getDocs, query, where, and, or, QueryConstraint, getDoc, setDoc, DocumentReference, DocumentData, doc, Unsubscribe, onSnapshot, CollectionReference, addDoc, updateDoc, deleteDoc, serverTimestamp } from "firebase/firestore"
-import { FirebaseStorage, getStorage, ref, uploadBytes, StorageReference, deleteObjectref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { FirebaseStorage, getStorage, ref, uploadBytes, StorageReference, deleteObjectref, deleteObject, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../firebase";
 // import Command from '../entities/stores/command';
 import GlocalFirestoreData from '../globalData';
@@ -23,6 +23,33 @@ class CardDB {
         return addDoc(collection(db, `${this.collection}`),
             { ...data, created_at: serverTimestamp() })
 
+    }
+
+    async update(id, data) {
+
+        const docRef = doc(db, this.collection, id);
+
+        return updateDoc(docRef, {
+            ...data,
+            updated_at: serverTimestamp()
+        });
+    }
+
+    async deleteFile(url) {
+        try {
+            // Obtém a referência do arquivo no Firebase Storage
+            const fileRef = ref(storage, url);
+
+            // Deleta o arquivo do Firebase Storage
+            await deleteObject(fileRef);
+
+            // Retorna true para indicar que o arquivo foi excluído com sucesso
+            return true;
+        } catch (error) {
+            // Em caso de erro, você pode tratar aqui ou apenas retornar false
+            console.error("Erro ao excluir o arquivo:", error);
+            return false;
+        }
     }
     generateUniqueFileName(file) {
         const timestamp = Date.now(); // Obtém um timestamp único

@@ -34,6 +34,7 @@ const UparCardfa = () => {
     const [img, setImg] = useState('')
 
     const [load, setLoad] = useState(false)
+    const [idEdit, setIdEdit] = useState(false)
     // const [nome, setNome] = useState('')
     // const [nome, setNome] = useState('')
     // const [nome, setNome] = useState('')
@@ -57,6 +58,11 @@ const UparCardfa = () => {
     const [selectFortunasCusto, setSelectFortunasCusto] = useState([])
 
     const [deckTipe, setDeckTipe] = useState('')
+
+
+    const [isEdit, setIsEdit] = useState(false)
+    const [oldImageUrl, setOldImageUrl] = useState('')
+
 
     const limparForm = () => {
         setNome('')
@@ -85,6 +91,33 @@ const UparCardfa = () => {
         // getRaridade();
 
     }, [])
+
+    const init_edit = (card) => {
+        console.log('1', tipos)
+        console.log('2', card.tipo)
+        console.log('3', card.tipo.map(e => { return { id: e, tipo: tipos.find(t => t.id == e).tipo } }))
+
+        setIdEdit(card.id)
+        setIsEdit(true);
+        setNome(card.nome)
+        setVida(card.vida)
+        setRaridade(card.raridade)
+        setCausa(card.causa)
+        setCusto(card.custo)
+        setPa(card.p_a)
+        setVida(card.vida)
+        setRaridade(card.raridade)
+        setDeckTipe(card.deckTipo)
+        setEfeito(card.efeito)
+        setImg(card.url_img)
+        setOldImageUrl(card.url_img)
+
+        setSelectTipos(card.tipo.map(e => { return { id: e, tipo: tipos.find(t => t.id == e).tipo } }))
+        setSelectSubTipos(card.sub_tipo.map(e => { return { id: e, tipo: subTipos.find(t => t.id == e).tipo } }))
+        setSelectPalavrasChave(card.p_c.map(e => { return { id: e, nome: palavraChave.find(t => t.id == e).nome } }))
+        setSelectFortunas(card.fortuna.map(e => { return { id: e, tipo: fortunas.find(t => t.id == e).tipo } }))
+        setSelectFortunasCusto(card.fortunaCusto.map(e => { return { id: e, tipo: fortunas.find(t => t.id == e).tipo } }))
+    }
 
     const subTipoChange = (event) => {
         setValueSubTipo(event.target.value)
@@ -207,12 +240,12 @@ const UparCardfa = () => {
             vida: vida,
             raridade: raridade,
             efeito: efeito,
-            tipo: selectTipos.map(e => e.id),
-            sub_tipo: selectSubTipos.map(e => e.id),
-            p_c: selectPalavrasChave.map(e => e.id),
-            fortuna: selectFortunas.map(e => e.id),
+            tipo: selectTipos.map(e => e.id) || [],
+            sub_tipo: selectSubTipos.map(e => e.id) || [],
+            p_c: selectPalavrasChave.map(e => e.id) || [],
+            fortuna: selectFortunas.map(e => e.id) || [],
             deckTipo: deckTipe,
-            fortunaCusto: selectFortunasCusto.map(e => e.id),
+            fortunaCusto: selectFortunasCusto.map(e => e.id) || [],
         }
         console.log(form)
         const cardDb = new CardDB()
@@ -227,17 +260,66 @@ const UparCardfa = () => {
         setLoad(false)
 
     }
+
+    const enviarEdit = () => {
+        setLoad(true)
+        const form = {
+            nome: nome,
+            causa: causa,
+            custo: custo,
+            p_a: pa,
+            vida: vida,
+            raridade: raridade,
+            efeito: efeito,
+            tipo: selectTipos.map(e => e.id) || [],
+            sub_tipo: selectSubTipos.map(e => e.id) || [],
+            p_c: selectPalavrasChave.map(e => e.id) || [],
+            fortuna: selectFortunas.map(e => e.id) || [],
+            deckTipo: deckTipe,
+            fortunaCusto: selectFortunasCusto.map(e => e.id) || [],
+        }
+        console.log(form)
+        if (img instanceof File) {
+            const cardDb = new CardDB();
+            cardDb.deleteFile(oldImageUrl) // Excluir imagem antiga
+                .then(() => {
+                    cardDb.uploadFile(img).then(result => {
+                        form['url_img'] = result;
+                        // Realizar a edição com a nova imagem
+                        cardDb.update(idEdit, form).then(resultadoFinal => {
+                            console.log(resultadoFinal);
+                            limparForm();
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao excluir imagem antiga:', error);
+                });
+        } else {
+            // Se nenhuma nova imagem for carregada, apenas realizar a edição
+            const cardDb = new CardDB();
+            cardDb.update(idEdit, form).then(resultadoFinal => {
+                console.log(resultadoFinal);
+                limparForm();
+            });
+        }
+
+
+        setLoad(false)
+
+    }
     return (
 
         <div className='flex flex-col w-full mt-16 space-y-4 p-4'>
             {globalFirestoreData.role == "admin" ?
                 <div className='flex'>
-                    <div className='h-full w-[200px]'>
+                    <div className='h-full w-[200px] mr-2'>
                         {listCards.map(item => {
                             return (
-                                <div className='w-full h-[250px] flex flex-col items-start'>
+                                <div className='w-full h-[250px] flex flex-col items-start mb-8' onClick={() => { init_edit(item) }}>
                                     <img className=' w-full h-full object-contain' src={item && item?.url_img != '' ? item.url_img : require('../../assets/imagens/back_card.png')} loading="lazy"></img>
                                     <label className='ml-4'>{item.nome}</label>
+                                    <div className='border-b border-gray-400 w-full'></div>
                                 </div>
                             )
                         }
@@ -362,7 +444,7 @@ const UparCardfa = () => {
                             <div className=" flex-1 min-h-min md:min-w-min min-w-[300px]">
                                 <div>
                                     <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Raridade</label>
-                                    <select id="countries" onChange={event => setRaridade(event.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <select id="countries" onChange={event => setRaridade(event.target.value)} value={raridade} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value='' selected>Sem Raridade</option>
                                         {raridades.map(item => {
                                             return <option value={item.id}>{item.raridade}</option>
@@ -383,7 +465,7 @@ const UparCardfa = () => {
                             <div className=" flex-1 min-h-min md:min-w-min min-w-[300px]">
                                 <div>
                                     <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deck</label>
-                                    <select id="countries" onChange={event => setDeckTipe(event.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <select id="countries" onChange={event => setDeckTipe(event.target.value)} value={deckTipe} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value='' selected>Sem Deck</option>
                                         <option value='0' >Arvore</option>
                                         <option value='1' >Matriz</option>
@@ -421,7 +503,7 @@ const UparCardfa = () => {
                             </div>
                         </div>
 
-                        <button onClick={enviar} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded max-w-min'>{load ? <TailSpin
+                        <button onClick={isEdit ? enviarEdit : enviar} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded max-w-min'>{load ? <TailSpin
                             height="24"
                             width="24"
                             color="#ffffff"
