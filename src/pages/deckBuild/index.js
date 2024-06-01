@@ -153,7 +153,19 @@ const DeckBuild = ({ editar }) => {
     const cellRenderer = ({ columnIndex, key, rowIndex, style }) => {
         const index = rowIndex * column_count + columnIndex;
         const card = showListCards[index];
+        var count = listCardDeck.filter(item => item.id == card?.id)
+        count = count.map(item => item.qtd)
+        var sum = count.reduce((accumulator, value) => accumulator + value, 0);
 
+        count = quebradorDeck?.id == card?.id
+
+
+        sum += count = count ? 1 : 0
+
+        count = listCardDeckMatriz.filter(item => item.id == card?.id)
+        count = count.map(item => item.qtd)
+        sum += count.reduce((accumulator, value) => accumulator + value, 0);
+        // console.log(count, sum)
         return (
             <div key={key} style={style} className='flex justify-center items-center flex-1 '>
                 {card ? <div className='relative group'>
@@ -163,6 +175,8 @@ const DeckBuild = ({ editar }) => {
                     </div>
 
                     <Link to={'/detail/' + card?.id} target="_blank" className={` absolute ${zoom ? "right-5 top-4" : "right-1 top-6"} w-8 h-8 flex justify-center items-center rounded-full cursor-pointer group-hover:visible invisible hover:bg-slate-500 bg-slate-600 `}><InfoOutlinedIcon></InfoOutlinedIcon></Link>
+
+                    {sum != 0 ? <div className='select-none absolute flex justify-center items-center right-1 rounded border border-gray-400 top-16 bg-slate-700 w-10 h-9'>{sum}x</div> : null}
                 </div> : null}
             </div>
         );
@@ -195,7 +209,7 @@ const DeckBuild = ({ editar }) => {
     return (
         <div style={{ backgroundImage: `url(${imgBG})`, }} className='h-full w-full bg-cover bg-center flex justify-center md:justify-end items-cente overflow-hidden'>
             <div className={` bg-slate-700 bg-opacity-[94%] h-full w-full flex justify-center md:justify-end items-cente `}>
-                {globalFirestoreData.userId && editMode != false ?
+                {globalFirestoreData.userId && editMode != false || true ?
                     <div className={`${isOpenFilter || isOpenDeck ? 'md:mr-[320px] duration-200' : 'mr-0 duration-200'} relative w-full h-full pt-20 transition-all p-2  `}>
 
 
@@ -206,7 +220,7 @@ const DeckBuild = ({ editar }) => {
                         <div className='flex space-x-2 mb-2 items-end'>
 
                             <div className='flex-1 flex lg:space-x-2 lg:flex-row flex-col  lg:items-center justify-center '>
-                                <span className='min-w-fit text-2xl font-bold'>Criador de Deck</span>
+                                <h2 className='min-w-fit text-2xl font-bold'>Criador de Deck</h2>
                                 <div class="relative w-full">
                                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                         <SearchRoundedIcon></SearchRoundedIcon>

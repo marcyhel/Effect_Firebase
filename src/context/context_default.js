@@ -3,6 +3,8 @@ import { auth } from '../firebase';
 
 import GlocalFirestoreData from '../database/globalData';
 import { jwtDecode } from 'jwt-decode';
+// import { useAlert } from 'react-alert'
+import BugReport from "../pages/bugReport";
 
 import UserDb from "../database/wrappers/user";
 import SubTipoDb from "../database/wrappers/subTipos";
@@ -26,7 +28,7 @@ export const DefaultContext = createContext({})
 
 export default function DefaultProvider({ children }) {
     // const [user, setUser] = useState('');
-
+    const [showBugReport, setShowBugReport] = useState(false);
     const [is_descktop, setIs_descktop] = useState(true);
     const [globalFirestoreData, setGlobalFirestoreData] = useState({});
     const [usersList, setUsersList] = useState([]);
@@ -263,12 +265,21 @@ export default function DefaultProvider({ children }) {
         setShare_deck(true)
     }
 
+    const switchModalBug = () => {
+        setShowBugReport(!showBugReport)
+    }
+    const alertSucess = (msg) => {
+        // var alert = useAlert();
+        // alert.success(msg);
+    }
+
     const replaceText = (text) => {
         var img_quente = '<img style="width : 20px; height: 20px; display:inline; -webkit-filter: drop-shadow(0px 0px 3px #ff0050); filter: drop-shadow(0px 0px 3px #ff0050);" src='
         var img_algida = '<img style="width : 20px; height: 20px; display:inline; -webkit-filter: drop-shadow(0px 0px 3px #00a0ff); filter: drop-shadow(0px 0px 3px #00a0ff);" src='
 
         var num_algida = '<span style="text-shadow:0px 0px 5px #00a0ff; display:inline;" >'
         var num_quente = '<span style="text-shadow:0px 0px 5px #ff0050; display:inline;" >'
+        var num_neltro = '<span style="text-shadow:0px 0px 5px #ffffff; display:inline;" >'
         // console.log('text ====>', text)
         text = replacesAll(text, '[ign]', `${img_quente} ${imgIgn} ></img>`)
         text = replacesAll(text, '[verbus]', `${img_quente} ${imgVerbus} ></img>`)
@@ -288,6 +299,10 @@ export default function DefaultProvider({ children }) {
 
         text = replacesAll(text, '[1-a]', `${num_algida} 1 </span>`)
         text = replacesAll(text, '[1-q]', `${num_quente} 1 </span>`)
+        text = replacesAll(text, '[1-n]', `${num_neltro} 1 </span>`)
+        text = replacesAll(text, '[2-a]', `${num_algida} 1 </span>`)
+        text = replacesAll(text, '[2-q]', `${num_quente} 1 </span>`)
+        text = replacesAll(text, '[2-n]', `${num_neltro} 1 </span>`)
 
 
         return text
@@ -336,11 +351,13 @@ export default function DefaultProvider({ children }) {
             conta_cartas_lsit,
             resetaDeck,
             usersList,
-            share_deck, setShare_deck
+            share_deck, setShare_deck,
+            switchModalBug,
+            alertSucess
         }}>
             {children}
 
-
+            <BugReport visible={showBugReport}></BugReport>
 
         </DefaultContext.Provider>
     );

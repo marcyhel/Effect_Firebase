@@ -8,17 +8,17 @@ const UparCardfa = () => {
 
     const {
         globalFirestoreData,
-        getSubTipos,
+        // getSubTipos,
         subTipos,
         tipos,
-        getTipos,
-        getPalavrasChave,
+        // getTipos,
+        // getPalavrasChave,
         palavraChave,
-        getFortunas,
-        getCausas,
+        // getFortunas,
+        // getCausas,
         causas,
         fortunas,
-        getRaridade,
+        // getRaridade,
         raridades,
         listCards
 
@@ -95,7 +95,7 @@ const UparCardfa = () => {
     const init_edit = (card) => {
         console.log('1', tipos)
         console.log('2', card.tipo)
-        console.log('3', card.tipo.map(e => { return { id: e, tipo: tipos.find(t => t.id == e).tipo } }))
+        console.log('3', card.tipo.map(e => { return { id: e, tipo: tipos.find(t => t.id === e).tipo } }))
 
         setIdEdit(card.id)
         setIsEdit(true);
@@ -112,11 +112,11 @@ const UparCardfa = () => {
         setImg(card.url_img)
         setOldImageUrl(card.url_img)
 
-        setSelectTipos(card.tipo.map(e => { return { id: e, tipo: tipos.find(t => t.id == e).tipo } }))
-        setSelectSubTipos(card.sub_tipo.map(e => { return { id: e, tipo: subTipos.find(t => t.id == e).tipo } }))
-        setSelectPalavrasChave(card.p_c.map(e => { return { id: e, nome: palavraChave.find(t => t.id == e).nome } }))
-        setSelectFortunas(card.fortuna.map(e => { return { id: e, tipo: fortunas.find(t => t.id == e).tipo } }))
-        setSelectFortunasCusto(card.fortunaCusto.map(e => { return { id: e, tipo: fortunas.find(t => t.id == e).tipo } }))
+        setSelectTipos(card.tipo.map(e => { return { id: e, tipo: tipos.find(t => t.id === e).tipo } }))
+        setSelectSubTipos(card.sub_tipo.map(e => { return { id: e, tipo: subTipos.find(t => t.id === e).tipo } }))
+        setSelectPalavrasChave(card.p_c.map(e => { return { id: e, nome: palavraChave.find(t => t.id === e).nome } }))
+        setSelectFortunas(card.fortuna.map(e => { return { id: e, tipo: fortunas.find(t => t.id === e).tipo } }))
+        setSelectFortunasCusto(card.fortunaCusto.map(e => { return { id: e, tipo: fortunas.find(t => t.id === e).tipo } }))
     }
 
     const subTipoChange = (event) => {
@@ -291,40 +291,52 @@ const UparCardfa = () => {
                             limparForm();
                         });
                     });
+                    setIsEdit(false);
                 })
                 .catch(error => {
                     console.error('Erro ao excluir imagem antiga:', error);
+                    setIsEdit(false);
                 });
         } else {
             // Se nenhuma nova imagem for carregada, apenas realizar a edição
             const cardDb = new CardDB();
+            setIsEdit(false);
             cardDb.update(idEdit, form).then(resultadoFinal => {
                 console.log(resultadoFinal);
                 limparForm();
+                setIsEdit(false);
             });
         }
 
-
+        setIsEdit(false);
         setLoad(false)
 
+    }
+    const setEditFalse = () => {
+        setIsEdit(false);
+        limparForm();
     }
     return (
 
         <div className='flex flex-col w-full mt-16 space-y-4 p-4'>
             {globalFirestoreData.role == "admin" ?
-                <div className='flex'>
-                    <div className='h-full w-[200px] mr-2'>
-                        {listCards.map(item => {
-                            return (
-                                <div className='w-full h-[250px] flex flex-col items-start mb-8' onClick={() => { init_edit(item) }}>
-                                    <img className=' w-full h-full object-contain' src={item && item?.url_img != '' ? item.url_img : require('../../assets/imagens/back_card.png')} loading="lazy"></img>
-                                    <label className='ml-4'>{item.nome}</label>
-                                    <div className='border-b border-gray-400 w-full'></div>
-                                </div>
-                            )
-                        }
-                        )}
+                <div className='flex '>
+                    <div className='relative h-auto  w-[220px]  overflow-y-auto  scrollbar-thin scrollbar-thumb-slate-600  scrollbar-rounded-sm mr-3'>
+
+                        <div className=' w-[200px] mr-2   absolute'>
+                            {listCards.map(item => {
+                                return (
+                                    <div className='w-full h-[250px] flex flex-col items-start mb-8' onClick={() => { init_edit(item) }}>
+                                        <img className=' w-full h-full object-contain' src={item && item?.url_img != '' ? item.url_img : require('../../assets/imagens/back_card.png')} loading="lazy"></img>
+                                        <label className='ml-4'>{item.nome}</label>
+                                        <div className='border-b border-gray-400 w-full'></div>
+                                    </div>
+                                )
+                            }
+                            )}
+                        </div>
                     </div>
+
                     <div className='flex-1' >
 
                         <div className='flex flex-wrap md:space-x-4'>
@@ -513,6 +525,17 @@ const UparCardfa = () => {
                             wrapperClass=""
                             visible={true}
                         /> : "Enviar"}</button>
+
+                        <button onClick={isEdit ? setEditFalse : null} className={`${!isEdit ? "bg-green-400 cursor-default" : "bg-green-500 hover:bg-green-700 cursor-pointer"} ml-3   text-white font-bold py-2 px-4 border border-green-700 rounded w-48`} >{false ? <TailSpin
+                            height="24"
+                            width="24"
+                            color="#ffffff"
+                            ariaLabel="tail-spin-loading"
+                            radius="1"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                            visible={true}
+                        /> : "cancela edição"}</button>
                     </div>
                 </div>
                 : <div>Apenas Admin</div>}

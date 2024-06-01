@@ -68,12 +68,12 @@ const Login = () => {
         try {
             if (!email) {
                 alert.info('Informe o email!')
-
+                setLoad(false)
                 return false;
             }
             await sendPasswordResetEmail(auth, email).then((res) => {
                 console.log(res)
-
+                setLoad(false)
                 alert.success('Email de redefinição de senha enviado!')
             });
         } catch (err) {

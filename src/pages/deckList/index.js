@@ -68,8 +68,11 @@ const DeckList = () => {
 
         <div style={{ backgroundImage: `url(${imgBG})`, }} className='h-full w-full bg-cover bg-center flex justify-center md:justify-end items-cente overflow-hidden'>
             <div className={`${isOpenDeck ? 'md:mr-[320px] duration-200' : 'mr-0 duration-200'} bg-slate-700 bg-opacity-[94%] w-full h-full pt-16 transition-all  `}>
-                {globalFirestoreData.userId ?
+
+                {globalFirestoreData.userId || true ?
                     <div className='bg-gradient-to-b from-transparent via-transparent to-slate-900 w-full h-full p-4 overflow-y-auto  scrollbar-thin scrollbar-thumb-slate-600  scrollbar-rounded-sm  '>
+                        <h2 className='min-w-fit text-2xl font-bold'>Seus Decks</h2>
+                        <p className='min-w-fit text-sm font-bold'>Crie listas de cartas incriveis e compartilhe com a comunidade ou planeje uma mega estrategia e deiche privado para que ninguem roube a sua maravilhosa ideia !!</p>
                         <div className='flex flex-wrap  space-x-2 space-y-2'>
                             <div className={`${showCardFlutuante && is_descktop ? "" : "hidden"} w-40 h-56  right-80 mr-2 absolute z-40`} style={estiloCard}>
                                 <img className=' w-full h-full object-contain' style={estiloDoComponente} src={showCardFlutuante?.url_img} loading="lazy" ></img>

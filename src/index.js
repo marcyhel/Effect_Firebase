@@ -55,11 +55,13 @@ const router = createBrowserRouter([{
 
 root.render(
   <React.StrictMode>
-    <DefaultContext>
-      <AlertProvider template={AlertTemplate} {...options}>
+    <AlertProvider template={AlertTemplate} {...options}>
+      <DefaultContext>
+
         <RouterProvider router={router} />
-      </AlertProvider>
-    </DefaultContext>
+
+      </DefaultContext>
+    </AlertProvider>
   </React.StrictMode>
 );
 

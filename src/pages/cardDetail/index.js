@@ -163,42 +163,45 @@ const CardDetail = () => {
 
                         </div>
                         {/* <img style={{ width: 20, height: 20 }} src={imgIgn}  ></img> */}
-                        <div className='max-w-[400px]  flex flex-col px-3 mt-3' >
-                            <div className='flex space-x-3'>
-                                <div className='flex justify-center items-center h-full'>
-                                    {card && causas && card.causa != '' ?
-                                        <img style={estiloDoComponente} src={require('../../assets/imagens/' + causas.find(e => e.id == card.causa).causa + '.png')} class="w-8 h-8 object-cover mr-2" />
-                                        // null
-                                        : null}
-                                    {card && causas && card.causa != '' ? causas.find(e => e.id == card.causa).causa : null}
+                        <div className='max-w-[400px]  flex flex-col  mt-4  bg-gray-800  p-2 rounded-md ' >
+                            <div className='p-3 rounded border border-gray-700 '>
+                                <div className='flex space-x-3'>
+                                    <div className='flex justify-center items-center h-full'>
+                                        {card && causas && card.causa != '' ?
+                                            <img style={estiloDoComponente} src={require('../../assets/imagens/' + causas.find(e => e.id == card.causa).causa + '.png')} class="w-8 h-8 object-cover mr-2" />
+                                            // null
+                                            : null}
+                                        {card && causas && card.causa != '' ? causas.find(e => e.id == card.causa).causa : null}
+                                    </div>
+                                    <div className='flex justify-center items-center h-full'>
+                                        {card && raridades && card.raridade != '' ?
+                                            <img style={estiloDoComponente} src={require('../../assets/imagens/' + raridades.find(e => e.id == card.raridade)?.raridade + '.png')} class="w-8 h-8 object-cover mr-2" />
+                                            // null
+                                            : null}
+                                        {card && raridades && card.raridade != '' ? raridades.find(e => e.id == card.raridade)?.raridade : null}
+                                    </div>
                                 </div>
-                                <div className='flex justify-center items-center h-full'>
-                                    {card && raridades && card.raridade != '' ?
-                                        <img style={estiloDoComponente} src={require('../../assets/imagens/' + raridades.find(e => e.id == card.raridade)?.raridade + '.png')} class="w-8 h-8 object-cover mr-2" />
-                                        // null
-                                        : null}
-                                    {card && raridades && card.raridade != '' ? raridades.find(e => e.id == card.raridade)?.raridade : null}
-                                </div>
+
+                                <div className='w-full border-b border-slate-400 my-6' ></div>
+                                {card ?
+                                    <div className='flex flex-col'>
+                                        <h2 className='font-bold text-2xl '>{card.nome}</h2>
+                                        <div className='flex text-sm'>{card.tipo.map(e => tipos.find(t => t.id == e).tipo + ' ')} / {card.sub_tipo.map(e => subTipos.find(t => t.id == e).tipo + ' ')}</div>
+                                    </div> : null
+                                }
+
+                                <div className='w-full border-b border-slate-400 my-6' ></div>
+
+                                {efeito ? <HTMLRenderer html={efeito} /> : null}
+                                {palavraChave && card && card.p_c.length > 0 ? <div className='w-full border-b border-slate-400 my-6' ></div> : null}
+                                {palavraChave && card ? card.p_c.map(id => {
+                                    return <div className='  text-white  border-l-2 my-2 '>
+                                        {/* <div className='p-2'>{palavraChave.find(item => item.id == id).nome}</div> */}
+                                        {/* <div className='border-b border-slate-400 '></div> */}
+                                        <div className='ml-2  flex'>{<HTMLRenderer html={replaceText('<strong>' + palavraChave.find(item => item.id == id).nome + '</strong> - ' + palavraChave.find(item => item.id == id).descricao)} />}</div>
+                                    </div>
+                                }) : null}
                             </div>
-
-                            <div className='w-full border-b border-slate-400 my-6' ></div>
-                            {card ?
-                                <div className='flex flex-col'>
-                                    <div className='font-bold text-2xl'>{card.nome}</div>
-                                    <div className='flex text-sm'>{card.tipo.map(e => tipos.find(t => t.id == e).tipo + ' ')} / {card.sub_tipo.map(e => subTipos.find(t => t.id == e).tipo + ' ')}</div>
-                                </div> : null
-                            }
-
-                            <div className='w-full border-b border-slate-400 my-6' ></div>
-                            {palavraChave && card ? card.p_c.map(id => {
-                                return <div className='  text-white  border-l-2 my-2 '>
-                                    {/* <div className='p-2'>{palavraChave.find(item => item.id == id).nome}</div> */}
-                                    {/* <div className='border-b border-slate-400 '></div> */}
-                                    <div className='ml-2  flex'>{<HTMLRenderer html={replaceText('<strong>' + palavraChave.find(item => item.id == id).nome + '</strong> - ' + palavraChave.find(item => item.id == id).descricao)} />}</div>
-                                </div>
-                            }) : null}
-                            {efeito ? <HTMLRenderer html={efeito} /> : null}
-
                         </div>
                     </div>
                     <div className='flex items-center px-10 mt-10'>

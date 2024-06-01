@@ -77,6 +77,7 @@ const ListaCards = () => {
         return (
             <Link to={card ? "/detail/" + card?.id : null} key={key} style={style} className='flex justify-center items-center flex-1'>
                 {card && <Card card={card} zoom={zoom} index={columnIndex + 1} columMax={column_count} />}
+
             </Link>
         );
     };
@@ -84,12 +85,18 @@ const ListaCards = () => {
     return (
 
         <div style={{ backgroundImage: `url(${imgBG})`, }} className='h-full w-full bg-cover bg-center flex justify-center md:justify-end items-cente overflow-hidden'>
+
+
+
+
+
+
             <div className={`${isOpen ? 'md:mr-[320px] duration-200' : 'mr-0 duration-200'} bg-slate-700 bg-opacity-[94%] w-full h-full pt-20 transition-all  `}>
                 <div className='bg-gradient-to-b from-transparent via-transparent to-slate-900 w-full h-full p-2 '>
                     <div className='flex space-x-2 mb-2 items-end'>
 
                         <div className='flex-1 flex lg:space-x-2 lg:flex-row flex-col  lg:items-center justify-center '>
-                            <span className='min-w-fit text-2xl font-bold'>Galeria de Cards</span>
+                            <h2 className='min-w-fit text-2xl font-bold'>Galeria de Cards</h2>
                             <div class="relative w-full">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                     <SearchRoundedIcon></SearchRoundedIcon>
@@ -119,17 +126,23 @@ const ListaCards = () => {
                                 calc_column(width)
 
                                 return (
-                                    <Grid
-                                        className={`justify-center  scrollbar-thin scrollbar-thumb-slate-600  scrollbar-rounded-sm  `}
-                                        key={forceGridUpdate}
-                                        cellRenderer={cellRenderer}
-                                        columnCount={column_count}
-                                        columnWidth={(column_count == 1 ? width : column_count == 2 ? width / 2.2 : (zoom ? 245 : 145))} // Largura de cada coluna
-                                        height={height}
-                                        rowCount={Math.ceil(showListCards.length / column_count)}
-                                        rowHeight={(zoom ? 345 : 205)} // Altura de cada linha
-                                        width={width} // Largura total do grid
-                                    />
+                                    <div>
+
+                                        <Grid
+                                            className={`justify-center  scrollbar-thin scrollbar-thumb-slate-600  scrollbar-rounded-sm  `}
+                                            key={forceGridUpdate}
+                                            cellRenderer={cellRenderer}
+                                            columnCount={column_count}
+                                            columnWidth={(column_count == 1 ? width : column_count == 2 ? width / 2.2 : (zoom ? 245 : 145))} // Largura de cada coluna
+                                            height={height}
+                                            rowCount={Math.ceil(showListCards.length / column_count)}
+                                            rowHeight={(zoom ? 345 : 205)} // Altura de cada linha
+                                            width={width} // Largura total do grid
+                                        >
+
+                                        </Grid>
+                                    </div>
+
                                 )
                             }}
                         </AutoSizer>

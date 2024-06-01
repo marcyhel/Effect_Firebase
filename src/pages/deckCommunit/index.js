@@ -84,10 +84,12 @@ const DeckCommunit = () => {
             <div className={`${isOpenDeck || isOpenFilter ? 'md:mr-[320px] duration-200' : 'mr-0 duration-200'} bg-slate-700 bg-opacity-[94%] w-full h-full pt-16 transition-all  `}>
 
                 <div id='lista' className='bg-gradient-to-b from-transparent via-transparent to-slate-900 w-full h-full p-4 overflow-y-auto  scrollbar-thin scrollbar-thumb-slate-600  scrollbar-rounded-sm '>
+                    <h2 className='min-w-fit text-2xl font-bold'>Galeria de Decks</h2>
+                    <p className='min-w-fit text-sm font-bold'>Veja listas de cartas de toda a comunidade effect, e se inpire para criar sua nova estrategia !</p>
                     <div className='flex space-x-2 mb-2 items-end'>
 
                         <div className='flex-1 flex  lg:space-x-2 lg:flex-row flex-col  lg:items-center justify-start '>
-                            <span className='min-w-fit text-2xl font-bold'>Galeria de Decks</span>
+
                             {/* <div class="relative w-full">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                     <SearchRoundedIcon></SearchRoundedIcon>
@@ -201,9 +203,9 @@ const DeckCommunit = () => {
                                         {deckSelect.matriz.map(item => <ItemListDeckBuild item={item} lessItem={() => { handleNavigateExternal(item.id) }} addItem={() => { }} className='overflow-x-visible' > </ItemListDeckBuild>)}
                                     </div>
 
-                                    <div className='flex justify-end mt-4 select-none mb-6'>
+                                    {/* <div className='flex justify-end mt-4 select-none mb-6'>
                                         <Link to='/edita-deck' onClick={() => { setDeck_tu_edit(deckSelect) }} className={`bg-orange-500 hover:bg-orange-400 cursor-pointer  rounded-md px-4 py-2`}  >Editar</Link>
-                                    </div>
+                                    </div> */}
                                     {/* <div className='flex justify-end mt-4 select-none'>
                                     <div className={`${load ? "bg-orange-300" : "bg-orange-500"} hover:bg-orange-400 cursor-pointer  rounded-md px-4 py-2`} onClick={() => { salveDeck() }} disable={load} >Salvar</div>
                                 </div> */}
