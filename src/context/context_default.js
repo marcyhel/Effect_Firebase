@@ -300,10 +300,10 @@ export default function DefaultProvider({ children }) {
         text = replacesAll(text, '[1-a]', `${num_algida} 1 </span>`)
         text = replacesAll(text, '[1-q]', `${num_quente} 1 </span>`)
         text = replacesAll(text, '[1-n]', `${num_neltro} 1 </span>`)
-        text = replacesAll(text, '[2-a]', `${num_algida} 1 </span>`)
-        text = replacesAll(text, '[2-q]', `${num_quente} 1 </span>`)
-        text = replacesAll(text, '[2-n]', `${num_neltro} 1 </span>`)
-
+        text = replacesAll(text, '[2-a]', `${num_algida} 2 </span>`)
+        text = replacesAll(text, '[2-q]', `${num_quente} 2 </span>`)
+        text = replacesAll(text, '[2-n]', `${num_neltro} 2 </span>`)
+        text = replacesAll(text, '[x-n]', `${num_neltro} X </span>`)
 
         return text
     }

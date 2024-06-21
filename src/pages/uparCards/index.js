@@ -24,6 +24,9 @@ const UparCardfa = () => {
 
     } = useContext(DefaultContext);
 
+    const [busca_edit, setBusca_edit] = useState('')
+    const [edit_list, setEdit_list] = useState(listCards)
+
     const [nome, setNome] = useState('')
     const [causa, setCausa] = useState('')
     const [custo, setCusto] = useState('')
@@ -118,6 +121,15 @@ const UparCardfa = () => {
         setSelectFortunas(card.fortuna.map(e => { return { id: e, tipo: fortunas.find(t => t.id === e).tipo } }))
         setSelectFortunasCusto(card.fortunaCusto.map(e => { return { id: e, tipo: fortunas.find(t => t.id === e).tipo } }))
     }
+
+    const busca_edit_filter = (event) => {
+        setBusca_edit(event.target.value)
+        if (event.target.value != "" && event.target.value != null) {
+            setEdit_list(listCards.filter(e => e.nome.toLowerCase().includes(event.target.value.toLowerCase())));
+        } else {
+            setEdit_list(listCards)
+        }
+    };
 
     const subTipoChange = (event) => {
         setValueSubTipo(event.target.value)
@@ -321,14 +333,20 @@ const UparCardfa = () => {
         <div className='flex flex-col w-full mt-16 space-y-4 p-4'>
             {globalFirestoreData.role == "admin" ?
                 <div className='flex '>
-                    <div className='relative h-auto  w-[220px]  overflow-y-auto  scrollbar-thin scrollbar-thumb-slate-600  scrollbar-rounded-sm mr-3'>
 
+                    <div className='relative h-auto  w-[220px]  overflow-y-auto  scrollbar-thin scrollbar-thumb-slate-600  scrollbar-rounded-sm mr-3'>
+                        <div className='fixed z-30 w-[200px] '>
+                            <input onChange={busca_edit_filter} value={busca_edit} type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar carta" />
+                        </div>
+                        <div className='mb-12 '></div>
                         <div className=' w-[200px] mr-2   absolute'>
-                            {listCards.map(item => {
+
+                            {edit_list.map(item => {
                                 return (
-                                    <div className='w-full h-[250px] flex flex-col items-start mb-8' onClick={() => { init_edit(item) }}>
-                                        <img className=' w-full h-full object-contain' src={item && item?.url_img != '' ? item.url_img : require('../../assets/imagens/back_card.png')} loading="lazy"></img>
+                                    <div className='w-full  flex flex-col items-start mb-5' onClick={() => { init_edit(item) }}>
                                         <label className='ml-4'>{item.nome}</label>
+                                        <img className=' w-full h-full object-contain' src={item && item?.url_img != '' ? item.url_img : require('../../assets/imagens/back_card.png')} loading="lazy"></img>
+
                                         <div className='border-b border-gray-400 w-full'></div>
                                     </div>
                                 )
@@ -339,7 +357,7 @@ const UparCardfa = () => {
 
                     <div className='flex-1' >
 
-                        <div className='flex flex-wrap md:space-x-4'>
+                        <div className='flex flex-wrap md:space-x-4 mt-1'>
                             <div className="flex-1 min-h-min md:min-w-min min-w-[300px]">
                                 <div>
                                     <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
@@ -361,7 +379,7 @@ const UparCardfa = () => {
                             </div>
 
                         </div>
-                        <div className='flex flex-wrap  md:space-x-4'>
+                        <div className='flex flex-wrap  md:space-x-4 mt-1'>
                             <div className=" min-h-min flex-1  relative md:min-w-min min-w-[300px]">
 
                                 <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo</label>
@@ -396,7 +414,7 @@ const UparCardfa = () => {
                             </div>
                         </div>
 
-                        <div className='flex flex-wrap  md:space-x-4'>
+                        <div className='flex flex-wrap  md:space-x-4 mt-1'>
                             <div className="min-h-min flex-1 md:min-w-min min-w-[300px]">
                                 <div className='relative'>
                                     <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Palavras Chaves</label>
@@ -432,7 +450,7 @@ const UparCardfa = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='flex flex-wrap md:space-x-4'>
+                        <div className='flex flex-wrap md:space-x-4 mt-1'>
                             <div className="flex-1 min-h-min md:min-w-min min-w-[300px]">
                                 <div>
                                     <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Custo</label>
@@ -452,7 +470,7 @@ const UparCardfa = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='flex flex-wrap md:space-x-4'>
+                        <div className='flex flex-wrap md:space-x-4 mt-1'>
                             <div className=" flex-1 min-h-min md:min-w-min min-w-[300px]">
                                 <div>
                                     <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Raridade</label>
@@ -468,7 +486,7 @@ const UparCardfa = () => {
                             <div className=" flex-1 min-h-min md:min-w-min min-w-[300px]">
                                 <div>
                                     <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Efeito</label>
-                                    <textarea type="text" rows="2" id="first_name" onChange={(event) => { setEfeito(event.target.value) }} value={efeito} className="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required />
+                                    <textarea type="text" rows="5" id="first_name" onChange={(event) => { setEfeito(event.target.value) }} value={efeito} className="bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required />
                                 </div>
                             </div>
                         </div>
@@ -487,7 +505,7 @@ const UparCardfa = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="min-h-min flex-1 md:min-w-min min-w-[300px]">
+                        <div className="min-h-min flex-1 md:min-w-min min-w-[300px] mt-1">
                             <div className='relative'>
                                 <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fortunas Custo </label>
                                 <div className='bg-slate-500 w-full h-11 rounded-md p-1 mb-1 flex space-x-1 overflow-x-auto scrollbar-thin scrollbar-thumb-slate-600  scrollbar-rounded-sm border border-gray-800 border-1'>
@@ -504,7 +522,7 @@ const UparCardfa = () => {
 
                             </div>
                         </div>
-                        <div className='flex'>
+                        <div className='flex mb-2 mt-1'>
 
                             <div className=" flex-1 ">
                                 <div className=" flex-1 min-h-min ">

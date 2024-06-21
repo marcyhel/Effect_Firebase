@@ -209,7 +209,7 @@ const DeckBuild = ({ editar }) => {
     return (
         <div style={{ backgroundImage: `url(${imgBG})`, }} className='h-full w-full bg-cover bg-center flex justify-center md:justify-end items-cente overflow-hidden'>
             <div className={` bg-slate-700 bg-opacity-[94%] h-full w-full flex justify-center md:justify-end items-cente `}>
-                {globalFirestoreData.userId && editMode != false || true ?
+                {globalFirestoreData.userId && editMode != false ?
                     <div className={`${isOpenFilter || isOpenDeck ? 'md:mr-[320px] duration-200' : 'mr-0 duration-200'} relative w-full h-full pt-20 transition-all p-2  `}>
 
 

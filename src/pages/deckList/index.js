@@ -69,7 +69,7 @@ const DeckList = () => {
         <div style={{ backgroundImage: `url(${imgBG})`, }} className='h-full w-full bg-cover bg-center flex justify-center md:justify-end items-cente overflow-hidden'>
             <div className={`${isOpenDeck ? 'md:mr-[320px] duration-200' : 'mr-0 duration-200'} bg-slate-700 bg-opacity-[94%] w-full h-full pt-16 transition-all  `}>
 
-                {globalFirestoreData.userId || true ?
+                {globalFirestoreData.userId ?
                     <div className='bg-gradient-to-b from-transparent via-transparent to-slate-900 w-full h-full p-4 overflow-y-auto  scrollbar-thin scrollbar-thumb-slate-600  scrollbar-rounded-sm  '>
                         <h2 className='min-w-fit text-2xl font-bold'>Seus Decks</h2>
                         <p className='min-w-fit text-sm font-bold'>Crie listas de cartas incriveis e compartilhe com a comunidade ou planeje uma mega estrategia e deiche privado para que ninguem roube a sua maravilhosa ideia !!</p>
@@ -85,8 +85,6 @@ const DeckList = () => {
 
 
                             </Link>
-
-
 
                             {listDecksUser ? listDecksUser.map(item => { return <div onClick={() => { toggleDrawerDeck(true); changeDeck(item) }}><ItemListDeck deck={item}></ItemListDeck> </div> }) : null}
                             <aside className={`${isOpenDeck ? 'translate-x-0 duration-200' : ' duration-300 translate-x-full '} overflow-x-visible bg-slate-700  pt-16 transition-transform  fixed top-0 right-0 z-30 w-80 h-screen shadow-lg flex flex-col p-3 border-l border-slate-600 border-opacity-60`}>
